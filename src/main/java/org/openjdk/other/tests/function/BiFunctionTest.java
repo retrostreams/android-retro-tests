@@ -30,7 +30,6 @@ package org.openjdk.other.tests.function;
 
 import java9.util.function.BiFunction;
 import java9.util.function.Function;
-import java9.util.function.BiFunctions;
 
 import org.testng.annotations.Test;
 
@@ -82,13 +81,13 @@ public class BiFunctionTest {
 
     public void testAndThen() {
         try {
-            BiFunction<Quote, Order, Long> checkout = BiFunctions.andThen(estimate, null);
+            BiFunction<Quote, Order, Long> checkout = estimate.andThen(null);
             fail("Null argument should throw NPE");
         } catch (NullPointerException npe) {
             // ignore
         }
 
-        BiFunction<Quote, Order, Long> checkout = BiFunctions.andThen(estimate, creditcheck);
+        BiFunction<Quote, Order, Long> checkout = estimate.andThen(creditcheck);
         try {
             checkout.apply(new Quote(20.0), new Order(-1));
             fail("First function delivers exception");
