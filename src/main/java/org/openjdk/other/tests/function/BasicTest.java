@@ -37,8 +37,8 @@ import java9.util.function.ToIntFunction;
 
 import org.testng.annotations.Test;
 
-import static java9.util.function.BinaryOperators.minBy;
-import static java9.util.function.BinaryOperators.maxBy;
+import static java9.util.function.BinaryOperator.minBy;
+import static java9.util.function.BinaryOperator.maxBy;
 
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.fail;
