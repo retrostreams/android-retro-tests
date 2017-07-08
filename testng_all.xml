@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="android-retro-OpenJDK-TestSuite">
+  <test verbose="2" name="android-retro_tests">
+    <classes>
+      <!-- Test dependencies block 1 - block 10: android-retrostreams.jar -->
+
+      <!-- block 1 -->
+      <class name="java9.util.stream.FlagOpTest"/>
+      <class name="java9.util.stream.StreamOpFlagsTest"/>
+      <class name="java9.util.stream.StreamFlagsTest"/>
+      <class name="java9.util.stream.NodeBuilderTest"/>
+      <class name="java9.util.stream.IntNodeTest"/>
+      <class name="java9.util.stream.LongNodeTest"/>
+      <class name="java9.util.stream.DoubleNodeTest"/>
+      <class name="java9.util.stream.NodeTest"/>
+      <class name="java9.util.stream.SpinedBufferTest"/>
+      <class name="java9.util.stream.SliceSpliteratorTest"/>
+      <class name="java9.util.stream.StreamReuseTest"/>
+
+      <!-- block 2 -->
+      <class name="org.openjdk.tests.java.util.arrays.ParallelPrefix"/>
+      <class name="org.openjdk.tests.java.util.arrays.ParallelSorting"/>
+      <class name="org.openjdk.tests.java.util.arrays.SetAllTest"/>
+      <class name="org.openjdk.tests.java.util.arrays.StreamAndSpliterator"/>
+      <class name="org.openjdk.tests.java.util.comparator.BasicTest"/>
+      <class name="org.openjdk.tests.java.util.comparator.TypeTest"/>
+      <class name="org.openjdk.tests.java.util.map.InPlaceOpsCollisions"/>
+      <class name="org.openjdk.tests.java.util.map.Defaults"/>
+      <class name="org.openjdk.tests.java.util.map.FunctionalCMEs"/>
+
+      <!-- block 3 -->
+      <class name="org.openjdk.tests.java.util.stream.StreamCloseTest"/>
+      <class name="org.openjdk.tests.java.util.stream.SummaryStatisticsTest"/>
+      <class name="org.openjdk.tests.java.util.stream.ForEachOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.IntUniqOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.SpliteratorTest"/>
+      <class name="org.openjdk.tests.java.util.stream.StreamSpliteratorTest"/>
+      <class name="org.openjdk.tests.java.util.stream.CountTest"/>
+      <class name="org.openjdk.tests.java.util.stream.ConcatOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.GroupByOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.CountLargeTest"/>
+      <class name="org.openjdk.tests.java.util.stream.ReduceByOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.RangeTest"/>
+      <class name="org.openjdk.tests.java.util.stream.InfiniteStreamWithLimitOpTest"/>
+
+      <!-- block 4 -->
+      <class name="org.openjdk.tests.java.util.stream.IntPrimitiveOpsTests"/>
+      <class name="org.openjdk.tests.java.util.stream.LongPrimitiveOpsTests"/>
+      <class name="org.openjdk.tests.java.util.stream.DoublePrimitiveOpsTests"/>
+      <class name="org.openjdk.tests.java.util.stream.PrimitiveAverageOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.PrimitiveSumTest"/>
+      <class name="org.openjdk.tests.java.util.stream.IntReduceTest"/>
+      <class name="org.openjdk.tests.java.util.stream.ReduceTest"/>
+      <class name="org.openjdk.tests.java.util.stream.CollectionAndMapModifyStreamTest"/>
+
+      <!-- block 5 -->
+      <class name="org.openjdk.tests.java.util.stream.SequentialOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.MinMaxTest"/>
+      <class name="org.openjdk.tests.java.util.stream.StreamParSeqTest"/>
+      <class name="org.openjdk.tests.java.util.stream.IntSliceOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.StreamLinkTest"/>
+      <class name="org.openjdk.tests.java.util.stream.SortedOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.TeeOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.MatchOpTest"/>
+
+      <!-- block 6 -->
+      <class name="org.openjdk.tests.java.util.stream.DistinctOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.CollectorsTest"/>
+      <class name="org.openjdk.tests.java.util.stream.FindAnyOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.StreamBuilderTest"/>
+      <class name="org.openjdk.tests.java.util.stream.FlatMapOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.SliceOpTest"/>
+
+      <!-- block 7 -->
+      <class name="org.openjdk.tests.java.util.stream.FilterOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.ToArrayOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.FindFirstOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.IterateTest"/>
+      <class name="org.openjdk.tests.java.util.stream.MapOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.ConcatTest"/>
+
+      <!-- block 8 -->
+      <class name="org.openjdk.other.tests.forkjoin.SubmissionTest"/>
+      <class name="org.openjdk.other.tests.function.BasicTest"/>
+      <class name="org.openjdk.other.tests.function.BiFunctionTest"/>
+      <class name="org.openjdk.other.tests.java.util.miscellaneous.FillableStringTest"/>
+      <class name="org.openjdk.other.tests.java.util.miscellaneous.MapTest"/>
+      <class name="org.openjdk.other.tests.java.util.stream.CollectionAndMapModifyStreamTest"/>
+      <class name="org.openjdk.other.tests.java.util.stream.COWCollectionsTest"/>
+      <class name="org.openjdk.other.tests.java.util.stream.DoublePrimitiveOpsTests"/>
+      <class name="org.openjdk.other.tests.java.util.stream.IntPrimitiveOpsTests"/>
+      <class name="org.openjdk.other.tests.java.util.stream.LongPrimitiveOpsTests"/>
+      <class name="org.openjdk.other.tests.java.util.stream.StreamParSeqTest"/>
+      <class name="org.openjdk.other.tests.objects.BasicObjectsTest"/>
+      <class name="org.openjdk.other.tests.objects.CheckIndex"/>
+      <class name="org.openjdk.other.tests.optional.Basic"/>
+      <class name="org.openjdk.other.tests.optional.BasicDouble"/>
+      <class name="org.openjdk.other.tests.optional.BasicInt"/>
+      <class name="org.openjdk.other.tests.optional.BasicLong"/>
+      <class name="org.openjdk.other.tests.phaser.Basic"/>
+      <class name="org.openjdk.other.tests.phaser.FickleRegister"/>
+      <class name="org.openjdk.other.tests.phaser.PhaseOverflow"/>
+      <class name="org.openjdk.other.tests.phaser.TieredArriveLoops"/>
+      <class name="org.openjdk.tests.java.util.PrimitiveIteratorDefaults"/>
+      <class name="org.openjdk.tests.java.util.SplittableRandomTest"/>
+      <class name="org.openjdk.other.tests.stringJoiner.MergeTest"/>
+      <class name="org.openjdk.other.tests.stringJoiner.StringJoinerTest"/>
+      <class name="org.openjdk.other.tests.sumAndAverage.TestDoubleSumAverage"/>
+
+      <!-- block 9 -->
+      <class name="java9.util.Sorting"/>
+      <class name="java9.util.SortingNearlySortedPrimitive"/>
+      <class name="java9.util.Ticket66Test"/>
+      <class name="org.openjdk.tests.java.util.SpliteratorCharacteristics"/>
+      <class name="org.openjdk.tests.java.util.SpliteratorCollisions"/>
+      <class name="org.openjdk.tests.java.util.SpliteratorTraversingAndSplittingTest"/>
+      <class name="org.openjdk.tests.java.util.SpliteratorFailFastTest"/>
+      <class name="org.openjdk.tests.java.util.SpliteratorLateBindingTest"/>
+      <class name="org.openjdk.other.tests.java.util.arrays.ParallelSorting"/>
+
+      <!-- block 10 (Java9: Stream takeWhile / dropWhile) -->
+      <class name="org.openjdk.tests.java.util.stream.WhileOpTest"/>
+      <class name="org.openjdk.tests.java.util.stream.WhileOpStatefulTest"/>
+
+      <!-- Test dependencies block 11: android-retrostreams.jar + android-retrofuture.jar -->
+
+      <!-- block 11 (CompletableFuture with Java9 extensions - android-retrofuture) -->
+      <class name="org.openjdk.tests.java.util.concurrent.Basic"/>
+      <class name="org.openjdk.tests.java.util.concurrent.ThenComposeAsyncTest"/>
+      <class name="org.openjdk.tests.java.util.concurrent.ThenComposeExceptionTest"/>
+      <!-- Not a CompletableFuture test, but a test with a dependency on CompletableFuture -->
+      <class name="org.openjdk.other.tests.chm.ConcurrentAssociateTest"/>
+
+      <!-- Test dependencies block 12: android-retrostreams.jar + android-retroatomic.jar -->
+
+      <!-- block 12 (j9.u.c.atomic package - android-retroatomic) -->
+      <class name="org.openjdk.other.tests.splittableRandom.SplittableRandomTest"/>
+      <class name="org.openjdk.other.tests.threadLocalRandom.ThreadLocalRandomTest"/>
+
+      <!-- Test dependencies block 13: android-retrostreams.jar + android-retroatomic.jar + android-retrofuture.jar + android-retroflow.jar -->
+
+      <!-- block 13 (JSR 166 TCK tests) -->
+      <class name="org.openjdk.tests.tck.ArrayDeque8Test"/>
+      <class name="org.openjdk.tests.tck.Collection8Test"/>
+      <class name="org.openjdk.tests.tck.CompletableFutureTest"/>
+      <class name="org.openjdk.tests.tck.CountedCompleterTest"/>
+      <class name="org.openjdk.tests.tck.CountedCompleter8Test"/>
+      <class name="org.openjdk.tests.tck.DoubleAccumulatorTest"/>
+      <class name="org.openjdk.tests.tck.DoubleAdderTest"/>
+      <class name="org.openjdk.tests.tck.ForkJoinPool8Test"/>
+      <class name="org.openjdk.tests.tck.ForkJoinPool9Test"/>
+      <class name="org.openjdk.tests.tck.ForkJoinPoolTest"/>
+      <class name="org.openjdk.tests.tck.ForkJoinTask8Test"/>
+      <class name="org.openjdk.tests.tck.ForkJoinTaskTest"/>
+      <class name="org.openjdk.tests.tck.LongAccumulatorTest"/>
+      <class name="org.openjdk.tests.tck.LongAdderTest"/>
+      <class name="org.openjdk.tests.tck.PhaserTest"/>
+      <class name="org.openjdk.tests.tck.RecursiveActionTest"/>
+      <class name="org.openjdk.tests.tck.RecursiveTaskTest"/>
+      <class name="org.openjdk.tests.tck.SplittableRandomTest"/>
+      <class name="org.openjdk.tests.tck.SubmissionPublisherTest"/>
+      <class name="org.openjdk.tests.tck.ThreadLocalRandom8Test"/>
+      <class name="org.openjdk.tests.tck.ThreadLocalRandomTest"/>
+      <class name="org.openjdk.tests.tck.LinkedBlockingQueue8Test"/>
+      <class name="org.openjdk.tests.tck.LinkedBlockingDeque8Test"/>
+
+    </classes>
+  </test>
+</suite>
