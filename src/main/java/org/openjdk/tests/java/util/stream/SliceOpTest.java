@@ -243,11 +243,6 @@ public class SliceOpTest extends OpTestCase {
             public Comparator<? super T> getComparator() {
                 return s.getComparator();
             }
-
-            @Override
-            public long getExactSizeIfKnown() {
-                return Spliterators.getExactSizeIfKnown(this);
-            }
         }
         List<Integer> list = IntStreams.range(0, 100).boxed().collect(Collectors.toList());
         TestData.OfRef<Integer> data = TestData.Factory.ofSupplier(

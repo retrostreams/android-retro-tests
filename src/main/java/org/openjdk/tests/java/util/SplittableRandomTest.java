@@ -93,11 +93,6 @@ public class SplittableRandomTest extends OpTestCase {
 		public void forEachRemaining(Consumer<? super T> action) {
 			Spliterators.forEachRemaining(this, action);
 		}
-
-		@Override
-		public long getExactSizeIfKnown() {
-			return Spliterators.getExactSizeIfKnown(this);
-		}
     }
 
     static final int SIZE = 1 << 16;

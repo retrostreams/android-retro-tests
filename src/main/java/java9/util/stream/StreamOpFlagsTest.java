@@ -369,11 +369,6 @@ public class StreamOpFlagsTest {
             public void forEachRemaining(Consumer<? super Object> action) {
                 Spliterators.forEachRemaining(this, action);
             }
-
-            @Override
-            public long getExactSizeIfKnown() {
-                return Spliterators.getExactSizeIfKnown(this);
-            }
         };
 
         {
