@@ -46,16 +46,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import java9.util.Iterators;
 import java9.util.J8Arrays;
 import java9.util.PrimitiveIterator;
 import java9.util.Spliterators;
-import java9.util.function.DoubleConsumer;
 import java9.util.function.DoublePredicate;
 import java9.util.function.Function;
-import java9.util.function.IntConsumer;
 import java9.util.function.IntPredicate;
-import java9.util.function.LongConsumer;
 import java9.util.function.LongPredicate;
 import java9.util.function.Predicate;
 import java9.util.function.Supplier;
@@ -245,16 +241,6 @@ public class MatchOpTest extends OpTestCase {
                 }
                 return i.hasNext();
             }
-
-            @Override
-            public void forEachRemaining(IntConsumer action) {
-                Iterators.forEachRemaining(this, action);
-            }
-
-            @Override
-            public Integer next() {
-                return Integer.valueOf(nextInt());
-            }
         }
 
         Supplier<PrimitiveIterator.OfInt> source = () -> J8Arrays.stream(new int[]{1, 2, 3, 4}).iterator();
@@ -340,16 +326,6 @@ public class MatchOpTest extends OpTestCase {
                 }
                 return i.hasNext();
             }
-
-            @Override
-            public void forEachRemaining(LongConsumer action) {
-                Iterators.forEachRemaining(this, action);
-            }
-
-            @Override
-            public Long next() {
-                return Long.valueOf(nextLong());
-            }
         }
 
         Supplier<PrimitiveIterator.OfLong> source = () -> J8Arrays.stream(new long[]{1, 2, 3, 4}).iterator();
@@ -434,16 +410,6 @@ public class MatchOpTest extends OpTestCase {
                     i = source.get();
                 }
                 return i.hasNext();
-            }
-
-            @Override
-            public void forEachRemaining(DoubleConsumer action) {
-                Iterators.forEachRemaining(this, action);
-            }
-
-            @Override
-            public Double next() {
-                return Double.valueOf(nextDouble());
             }
         }
 

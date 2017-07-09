@@ -22,8 +22,8 @@
  */
 package org.openjdk.tests.java.util;
 
-import java9.util.Iterators;
 import java9.util.PrimitiveIterator;
+import java9.util.function.Consumer;
 import java9.util.function.DoubleConsumer;
 import java9.util.function.IntConsumer;
 import java9.util.function.LongConsumer;
@@ -51,20 +51,10 @@ public class PrimitiveIteratorDefaults {
             public boolean hasNext() {
                 return false;
             }
-
-            @Override
-            public void forEachRemaining(IntConsumer action) {
-                Iterators.forEachRemaining(this, action);
-            }
-
-            @Override
-            public Integer next() {
-                return nextInt();
-            }
         };
 
         assertThrowsNPE(() -> i.forEachRemaining((IntConsumer) null));
-//        assertThrowsNPE(() -> i.forEachRemaining((Consumer<Integer>) null));
+        assertThrowsNPE(() -> i.forEachRemaining((Consumer<Integer>) null));
     }
 
     public void testLongForEachRemainingWithNull() {
@@ -78,20 +68,10 @@ public class PrimitiveIteratorDefaults {
             public boolean hasNext() {
                 return false;
             }
-
-            @Override
-            public void forEachRemaining(LongConsumer action) {
-                Iterators.forEachRemaining(this, action);   
-            }
-
-            @Override
-            public Long next() {
-                return nextLong();
-            }
         };
 
         assertThrowsNPE(() -> i.forEachRemaining((LongConsumer) null));
-//        assertThrowsNPE(() -> i.forEachRemaining((Consumer<Long>) null));
+        assertThrowsNPE(() -> i.forEachRemaining((Consumer<Long>) null));
     }
 
     public void testDoubleForEachRemainingWithNull() {
@@ -105,19 +85,9 @@ public class PrimitiveIteratorDefaults {
             public boolean hasNext() {
                 return false;
             }
-
-            @Override
-            public void forEachRemaining(DoubleConsumer action) {
-                Iterators.forEachRemaining(this, action);
-            }
-
-            @Override
-            public Double next() {
-                return nextDouble();
-            }
         };
 
         assertThrowsNPE(() -> i.forEachRemaining((DoubleConsumer) null));
-//        assertThrowsNPE(() -> i.forEachRemaining((Consumer<Double>) null));
+        assertThrowsNPE(() -> i.forEachRemaining((Consumer<Double>) null));
     }
 }
