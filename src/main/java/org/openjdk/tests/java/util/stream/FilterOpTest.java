@@ -29,7 +29,6 @@ import org.testng.annotations.Test;
 import static java9.util.stream.LambdaTestHelpers.*;
 
 import java.util.Arrays;
-import java9.util.function.Predicates;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.*;
 
@@ -66,10 +65,10 @@ public class FilterOpTest extends OpTestCase {
         exerciseOps(data, s -> s.filter(pEven));
         exerciseOps(data, s -> s.filter(pOdd));
 
-        result = exerciseOps(data, s -> s.filter(Predicates.and(pOdd, pEven))); // pOdd.and(pEven)));
+        result = exerciseOps(data, s -> s.filter(pOdd.and(pEven)));
         assertEquals(result.size(), 0);
 
-        result = exerciseOps(data, s -> s.filter(Predicates.or(pOdd, pEven))); // pOdd.or(pEven)));
+        result = exerciseOps(data, s -> s.filter(pOdd.or(pEven)));
         assertEquals(result.size(), data.size());
     }
 

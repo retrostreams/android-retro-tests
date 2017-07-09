@@ -48,7 +48,6 @@ import java9.util.StringJoiner;
 import java9.util.function.BinaryOperator;
 import java9.util.function.Function;
 import java9.util.function.Predicate;
-import java9.util.function.Predicates;
 import java9.util.function.Supplier;
 import java9.util.stream.Collector;
 import java9.util.stream.Collectors;
@@ -223,7 +222,7 @@ public class CollectorsTest extends OpTestCase {
                 fail(String.format("Class mismatch in PartitioningByAssertion: %s", map.getClass()));
             assertEquals(2, map.size());
             downstream.assertValue(map.get(true), () -> source.get().filter(predicate), ordered);
-            downstream.assertValue(map.get(false), () -> source.get().filter(Predicates.negate(predicate)), ordered);
+            downstream.assertValue(map.get(false), () -> source.get().filter(predicate.negate()), ordered);
         }
     }
 
