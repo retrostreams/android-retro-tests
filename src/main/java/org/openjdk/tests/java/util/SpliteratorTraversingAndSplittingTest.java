@@ -83,7 +83,6 @@ import java9.util.Spliterators;
 import java9.util.function.Consumer;
 import java9.util.function.DoubleConsumer;
 import java9.util.function.Function;
-import java9.util.function.Functions;
 import java9.util.function.IntConsumer;
 import java9.util.function.LongConsumer;
 import java9.util.function.Supplier;
@@ -134,7 +133,7 @@ public class SpliteratorTraversingAndSplittingTest extends SpliteratorTestHelper
         void addList(Function<Collection<T>, ? extends List<T>> l) {
             addCollection(l);
             if (!hasJDK8148748SublistBug) {
-                addCollection(Functions.andThen(l, list -> list.subList(0, list.size())));
+                addCollection(l.andThen(list -> list.subList(0, list.size())));
             }
         }
 
