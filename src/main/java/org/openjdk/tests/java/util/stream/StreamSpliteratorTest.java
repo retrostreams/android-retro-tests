@@ -127,11 +127,6 @@ public class StreamSpliteratorTest extends OpTestCase {
             return Spliterators.getExactSizeIfKnown(this);
         }
 
-        @Override
-        public boolean hasCharacteristics(int i) {
-            return Spliterators.hasCharacteristics(this, i);
-        }
-
         private static class OfInt extends ProxyNoExactSizeSpliterator<Integer> implements Spliterator.OfInt {
             final Spliterator.OfInt psp;
 

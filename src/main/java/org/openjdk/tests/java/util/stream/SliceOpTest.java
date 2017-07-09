@@ -248,11 +248,6 @@ public class SliceOpTest extends OpTestCase {
             public long getExactSizeIfKnown() {
                 return Spliterators.getExactSizeIfKnown(this);
             }
-
-            @Override
-            public boolean hasCharacteristics(int i) {
-                return Spliterators.hasCharacteristics(this, i);
-            }
         }
         List<Integer> list = IntStreams.range(0, 100).boxed().collect(Collectors.toList());
         TestData.OfRef<Integer> data = TestData.Factory.ofSupplier(

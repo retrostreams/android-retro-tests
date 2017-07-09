@@ -374,11 +374,6 @@ public class StreamOpFlagsTest {
             public long getExactSizeIfKnown() {
                 return Spliterators.getExactSizeIfKnown(this);
             }
-
-            @Override
-            public boolean hasCharacteristics(int characteristics) {
-                return Spliterators.hasCharacteristics(this, characteristics);
-            }
         };
 
         {
