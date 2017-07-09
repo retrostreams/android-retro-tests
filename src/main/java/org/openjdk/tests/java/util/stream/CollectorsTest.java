@@ -381,17 +381,17 @@ public class CollectorsTest extends OpTestCase {
                       s -> s.mapToDouble(x -> x * 2).average().orElse(0));
 
         // Test explicit Collectors.of
-        Collector<Integer, long[], Double> avg2xint = Collectors.of(() -> new long[2],
-                                                                   (a, b) -> {
-                                                                       a[0] += b * 2;
-                                                                       a[1]++;
-                                                                   },
-                                                                   (a, b) -> {
-                                                                       a[0] += b[0];
-                                                                       a[1] += b[1];
-                                                                       return a;
-                                                                   },
-                                                                   a -> a[1] == 0 ? 0.0d : (double) a[0] / a[1]);
+        Collector<Integer, long[], Double> avg2xint = Collector.of(() -> new long[2],
+                                                                  (a, b) -> {
+                                                                      a[0] += b * 2;
+                                                                      a[1]++;
+                                                                  },
+                                                                  (a, b) -> {
+                                                                      a[0] += b[0];
+                                                                      a[1] += b[1];
+                                                                      return a;
+                                                                  },
+                                                                  a -> a[1] == 0 ? 0.0d : (double) a[0] / a[1]);
         assertCollect(data, avg2xint,
                       s -> s.mapToInt(x -> x * 2).average().orElse(0));
     }
@@ -403,7 +403,7 @@ public class CollectorsTest extends OpTestCase {
                 .expectedResult(join(data, ""))
                 .exercise();
 
-        Collector<String, StringBuilder, String> likeJoining = Collectors.of(StringBuilder::new, StringBuilder::append, (sb1, sb2) -> sb1.append(sb2.toString()), StringBuilder::toString);
+        Collector<String, StringBuilder, String> likeJoining = Collector.of(StringBuilder::new, StringBuilder::append, (sb1, sb2) -> sb1.append(sb2.toString()), StringBuilder::toString);
         withData(data)
                 .terminal(s -> s.map(Object::toString).collect(likeJoining))
                 .expectedResult(join(data, ""))
