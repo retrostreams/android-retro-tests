@@ -34,7 +34,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import java9.util.Spliterator;
-import java9.util.Spliterators;
 import java9.util.function.Consumer;
 import java9.util.function.DoubleConsumer;
 import java9.util.function.Function;
@@ -200,16 +199,6 @@ public class StreamSpliteratorTest extends OpTestCase {
                 if (prefix != null)
                     prefixSplits++;
                 return prefix;
-            }
-
-            @Override
-            public boolean tryAdvance(Consumer<? super Double> consumer) {
-                return Spliterators.OfDouble.tryAdvance(this, consumer);
-            }
-
-            @Override
-            public void forEachRemaining(Consumer<? super Double> consumer) {
-                Spliterators.OfDouble.forEachRemaining(this, consumer);
             }
 
             @Override
