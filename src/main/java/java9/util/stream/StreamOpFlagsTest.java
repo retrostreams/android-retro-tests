@@ -364,11 +364,6 @@ public class StreamOpFlagsTest {
             public Comparator<? super Object> getComparator() {
                 return c;
             }
-
-            @Override
-            public void forEachRemaining(Consumer<? super Object> action) {
-                Spliterators.forEachRemaining(this, action);
-            }
         };
 
         {

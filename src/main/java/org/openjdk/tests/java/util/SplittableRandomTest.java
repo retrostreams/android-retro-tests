@@ -88,11 +88,6 @@ public class SplittableRandomTest extends OpTestCase {
             }
             return false;
         }
-
-		@Override
-		public void forEachRemaining(Consumer<? super T> action) {
-			Spliterators.forEachRemaining(this, action);
-		}
     }
 
     static final int SIZE = 1 << 16;
