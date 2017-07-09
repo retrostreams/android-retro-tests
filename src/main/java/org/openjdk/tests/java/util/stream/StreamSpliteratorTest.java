@@ -140,16 +140,6 @@ public class StreamSpliteratorTest extends OpTestCase {
             }
 
             @Override
-            public boolean tryAdvance(Consumer<? super Integer> consumer) {
-                return Spliterators.OfInt.tryAdvance(this, consumer);
-            }
-
-            @Override
-            public void forEachRemaining(Consumer<? super Integer> consumer) {
-                Spliterators.OfInt.forEachRemaining(this, consumer);
-            }
-
-            @Override
             public boolean tryAdvance(IntConsumer consumer) {
                 if (sizeOnTraversal == -1)
                     sizeOnTraversal = sp.getExactSizeIfKnown();
