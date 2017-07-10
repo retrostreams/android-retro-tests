@@ -30,7 +30,6 @@ package org.openjdk.other.tests.stringJoiner;
  */
 
 import java9.util.StringJoiner;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
@@ -53,7 +52,7 @@ public class MergeTest {
     }
 
     static Stream<Fixes> fixesStream() {
-        Stream.Builder<Fixes> builder = RefStreams.builder();
+        Stream.Builder<Fixes> builder = Stream.builder();
         for (final String prefix0 : PREFIXES) {
             for (final String suffix0 : SUFFIXES) {
                 for (final String prefix1 : PREFIXES) {
@@ -77,8 +76,8 @@ public class MergeTest {
         fixesStream().forEach(fixes -> {
             StringJoiner sj = new StringJoiner(",", fixes.pre0, fixes.suf0);
             StringJoiner other = new StringJoiner(",", fixes.pre1, fixes.suf1);
-            RefStreams.of("a", "b", "c").forEachOrdered(sj::add);
-            RefStreams.of("d", "e", "f").forEachOrdered(other::add);
+            Stream.of("a", "b", "c").forEachOrdered(sj::add);
+            Stream.of("d", "e", "f").forEachOrdered(other::add);
 
             sj.merge(other);
             assertEquals(sj.toString(), fixes.pre0 + "a,b,c,d,e,f" + fixes.suf0);
@@ -89,7 +88,7 @@ public class MergeTest {
         fixesStream().forEach(fixes -> {
             StringJoiner sj = new StringJoiner(",", fixes.pre0, fixes.suf0);
             StringJoiner other = new StringJoiner(",", fixes.pre1, fixes.suf1);
-            RefStreams.of("a", "b", "c").forEachOrdered(sj::add);
+            Stream.of("a", "b", "c").forEachOrdered(sj::add);
 
             sj.merge(other);
             assertEquals(sj.toString(), fixes.pre0 + "a,b,c" + fixes.suf0);
@@ -104,7 +103,7 @@ public class MergeTest {
         fixesStream().forEach(fixes -> {
             StringJoiner sj = new StringJoiner(",", fixes.pre0, fixes.suf0);
             StringJoiner other = new StringJoiner(":", fixes.pre1, fixes.suf1);
-            RefStreams.of("d", "e", "f").forEachOrdered(other::add);
+            Stream.of("d", "e", "f").forEachOrdered(other::add);
 
             sj.merge(other);
             assertEquals(sj.toString(), fixes.pre0 + "d:e:f" + fixes.suf0);
@@ -153,8 +152,8 @@ public class MergeTest {
         fixesStream().forEach(fixes -> {
             StringJoiner sj = new StringJoiner(",", fixes.pre0, fixes.suf0);
             StringJoiner other = new StringJoiner(":", fixes.pre1, fixes.suf1);
-            RefStreams.of("a", "b", "c").forEachOrdered(sj::add);
-            RefStreams.of("d", "e", "f").forEachOrdered(other::add);
+            Stream.of("a", "b", "c").forEachOrdered(sj::add);
+            Stream.of("d", "e", "f").forEachOrdered(other::add);
 
             sj.merge(other);
             assertEquals(sj.toString(), fixes.pre0 + "a,b,c,d:e:f" + fixes.suf0);

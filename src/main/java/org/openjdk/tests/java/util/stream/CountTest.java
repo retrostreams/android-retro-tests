@@ -33,12 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import java9.util.stream.Collectors;
 import java9.util.stream.DoubleStream;
-import java9.util.stream.DoubleStreams;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.DoubleStreamTestDataProvider;
 import java9.util.stream.IntStreamTestDataProvider;
@@ -167,37 +163,37 @@ public class CountTest extends OpTestCase {
     public void testNoEvaluationForSizedStream() {
         {
             AtomicInteger ai = new AtomicInteger();
-            RefStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
+            Stream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
             assertEquals(ai.get(), 0);
 
-            RefStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
-            assertEquals(ai.get(), 0);
-        }
-
-        {
-            AtomicInteger ai = new AtomicInteger();
-            IntStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
-            assertEquals(ai.get(), 0);
-
-            IntStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
+            Stream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
             assertEquals(ai.get(), 0);
         }
 
         {
             AtomicInteger ai = new AtomicInteger();
-            LongStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
+            IntStream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
             assertEquals(ai.get(), 0);
 
-            LongStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
+            IntStream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
             assertEquals(ai.get(), 0);
         }
 
         {
             AtomicInteger ai = new AtomicInteger();
-            DoubleStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
+            LongStream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
             assertEquals(ai.get(), 0);
 
-            DoubleStreams.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
+            LongStream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
+            assertEquals(ai.get(), 0);
+        }
+
+        {
+            AtomicInteger ai = new AtomicInteger();
+            DoubleStream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).count();
+            assertEquals(ai.get(), 0);
+
+            DoubleStream.of(1, 2, 3, 4).peek(e -> ai.getAndIncrement()).parallel().count();
             assertEquals(ai.get(), 0);
         }
     }

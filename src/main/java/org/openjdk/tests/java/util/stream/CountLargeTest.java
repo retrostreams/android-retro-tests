@@ -28,7 +28,7 @@
  */
 package org.openjdk.tests.java.util.stream;
 
-import java9.util.stream.LongStreams;
+import java9.util.stream.LongStream;
 
 import org.testng.annotations.Test;
 
@@ -51,13 +51,13 @@ public class CountLargeTest {
     public void testRefLarge() {
         // Test known sized stream
         {
-            long count = LongStreams.range(0, EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, EXPECTED_LARGE_COUNT)
                     .mapToObj(e -> null).count();
             assertEquals(count, EXPECTED_LARGE_COUNT);
         }
         // Test unknown sized stream
         {
-            long count = LongStreams.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
                     .mapToObj(e -> null).filter(e -> true).count();
             assertEquals(count, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT);
         }
@@ -66,13 +66,13 @@ public class CountLargeTest {
     public void testIntLarge() {
         // Test known sized stream
         {
-            long count = LongStreams.range(0, EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, EXPECTED_LARGE_COUNT)
                     .mapToInt(e -> 0).count();
             assertEquals(count, EXPECTED_LARGE_COUNT);
         }
         // Test unknown sized stream
         {
-            long count = LongStreams.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
                     .mapToInt(e -> 0).filter(e -> true).count();
             assertEquals(count, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT);
         }
@@ -81,13 +81,13 @@ public class CountLargeTest {
     public void testLongLarge() {
         // Test known sized stream
         {
-            long count = LongStreams.range(0, EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, EXPECTED_LARGE_COUNT)
                     .count();
             assertEquals(count, EXPECTED_LARGE_COUNT);
         }
         // Test unknown sized stream
         {
-            long count = LongStreams.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
                     .filter(e -> true).count();
             assertEquals(count, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT);
         }
@@ -96,13 +96,13 @@ public class CountLargeTest {
     public void testDoubleLarge() {
         // Test known sized stream
         {
-            long count = LongStreams.range(0, EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, EXPECTED_LARGE_COUNT)
                     .mapToDouble(e -> 0.0).count();
             assertEquals(count, EXPECTED_LARGE_COUNT);
         }
         // Test unknown sized stream
         {
-            long count = LongStreams.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
+            long count = LongStream.range(0, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT)
                     .mapToDouble(e -> 0.0).filter(e -> true).count();
             assertEquals(count, UNKNOWN_SIZED_EXPECTED_LARGE_COUNT);
         }

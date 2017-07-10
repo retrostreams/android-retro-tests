@@ -37,7 +37,7 @@ import java9.util.stream.Collectors;
 import java9.util.stream.StreamSupport;
 import java9.util.J8Arrays;
 import java9.util.Spliterator;
-import java9.util.stream.IntStreams;
+import java9.util.stream.IntStream;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -50,43 +50,43 @@ import static org.testng.Assert.assertTrue;
 public class IntPrimitiveOpsTests {
 
     public void testSum() {
-        long sum = IntStreams.range(1, 10).filter(i -> i % 2 == 0).sum();
+        long sum = IntStream.range(1, 10).filter(i -> i % 2 == 0).sum();
         assertEquals(sum, 20);
     }
 
     public void testMap() {
-        long sum = IntStreams.range(1, 10).filter(i -> i % 2 == 0).map(i -> i * 2).sum();
+        long sum = IntStream.range(1, 10).filter(i -> i % 2 == 0).map(i -> i * 2).sum();
         assertEquals(sum, 40);
     }
 
     public void testParSum() {
-        long sum = IntStreams.range(1, 10).parallel().filter(i -> i % 2 == 0).sum();
+        long sum = IntStream.range(1, 10).parallel().filter(i -> i % 2 == 0).sum();
         assertEquals(sum, 20);
     }
 
     @Test(groups = { "serialization-hostile" })
     public void testTee() {
         int[] teeSum = new int[1];
-        long sum = IntStreams.range(1, 10).filter(i -> i % 2 == 0).peek(i -> { teeSum[0] = teeSum[0] + i; }).sum();
+        long sum = IntStream.range(1, 10).filter(i -> i % 2 == 0).peek(i -> { teeSum[0] = teeSum[0] + i; }).sum();
         assertEquals(teeSum[0], sum);
     }
 
     @Test(groups = { "serialization-hostile" })
     public void testForEach() {
         int[] sum = new int[1];
-        IntStreams.range(1, 10).filter(i -> i % 2 == 0).forEach(i -> { sum[0] = sum[0] + i; });
+        IntStream.range(1, 10).filter(i -> i % 2 == 0).forEach(i -> { sum[0] = sum[0] + i; });
         assertEquals(sum[0], 20);
     }
 
     @Test(groups = { "serialization-hostile" })
     public void testParForEach() {
         AtomicInteger ai = new AtomicInteger(0);
-        IntStreams.range(1, 10).parallel().filter(i -> i % 2 == 0).forEach(ai::addAndGet);
+        IntStream.range(1, 10).parallel().filter(i -> i % 2 == 0).forEach(ai::addAndGet);
         assertEquals(ai.get(), 20);
     }
 
     public void testBox() {
-        List<Integer> l = IntStreams.range(1, 10).parallel().boxed().collect(Collectors.toList());
+        List<Integer> l = IntStream.range(1, 10).parallel().boxed().collect(Collectors.toList());
         int sum = StreamSupport.stream(l).reduce(0, (a, b) -> a + b);
         assertEquals(sum, 45);
     }
@@ -97,36 +97,36 @@ public class IntPrimitiveOpsTests {
     }
 
     public void testFlags() {
-        assertTrue(IntStreams.range(1, 10).boxed().spliterator()
+        assertTrue(IntStream.range(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.SORTED | Spliterator.DISTINCT));
-        assertFalse(IntStreams.of(1, 10).boxed().spliterator()
+        assertFalse(IntStream.of(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
-        assertFalse(IntStreams.of(1, 10).boxed().spliterator()
+        assertFalse(IntStream.of(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.DISTINCT));
 
-        assertTrue(IntStreams.range(1, 10).asLongStream().spliterator()
+        assertTrue(IntStream.range(1, 10).asLongStream().spliterator()
                       .hasCharacteristics(Spliterator.SORTED | Spliterator.DISTINCT));
-        assertFalse(IntStreams.of(1, 10).asLongStream().spliterator()
+        assertFalse(IntStream.of(1, 10).asLongStream().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
-        assertFalse(IntStreams.of(1, 10).asLongStream().spliterator()
+        assertFalse(IntStream.of(1, 10).asLongStream().spliterator()
                       .hasCharacteristics(Spliterator.DISTINCT));
 
-        assertTrue(IntStreams.range(1, 10).asDoubleStream().spliterator()
+        assertTrue(IntStream.range(1, 10).asDoubleStream().spliterator()
                       .hasCharacteristics(Spliterator.SORTED | Spliterator.DISTINCT));
-        assertFalse(IntStreams.of(1, 10).asDoubleStream().spliterator()
+        assertFalse(IntStream.of(1, 10).asDoubleStream().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
-        assertFalse(IntStreams.of(1, 10).asDoubleStream().spliterator()
+        assertFalse(IntStream.of(1, 10).asDoubleStream().spliterator()
                       .hasCharacteristics(Spliterator.DISTINCT));
     }
 
     public void testToArray() {
         {
-            int[] array =  IntStreams.range(1, 10).map(i -> i * 2).toArray();
+            int[] array =  IntStream.range(1, 10).map(i -> i * 2).toArray();
             assertEquals(array, new int[]{2, 4, 6, 8, 10, 12, 14, 16, 18});
         }
 
         {
-            int[] array =  IntStreams.range(1, 10).parallel().map(i -> i * 2).toArray();
+            int[] array =  IntStream.range(1, 10).parallel().map(i -> i * 2).toArray();
             assertEquals(array, new int[]{2, 4, 6, 8, 10, 12, 14, 16, 18});
         }
     }
@@ -134,7 +134,7 @@ public class IntPrimitiveOpsTests {
     public void testSort() {
         Random r = new Random();
 
-        int[] content = IntStreams.generate(() -> r.nextInt(100)).limit(10).toArray();
+        int[] content = IntStream.generate(() -> r.nextInt(100)).limit(10).toArray();
         int[] sortedContent = content.clone();
         Arrays.sort(sortedContent);
 
@@ -151,17 +151,17 @@ public class IntPrimitiveOpsTests {
 
     public void testSortDistinct() {
         {
-            int[] range = IntStreams.range(0, 10).toArray();
+            int[] range = IntStream.range(0, 10).toArray();
 
-            assertEquals(IntStreams.range(0, 10).sorted().distinct().toArray(), range);
-            assertEquals(IntStreams.range(0, 10).parallel().sorted().distinct().toArray(), range);
+            assertEquals(IntStream.range(0, 10).sorted().distinct().toArray(), range);
+            assertEquals(IntStream.range(0, 10).parallel().sorted().distinct().toArray(), range);
         }
 
         {
             int[] data = {5, 3, 1, 1, 5, 3, 9, 2, 9, 1, 0, 8};
             int[] expected = {0, 1, 2, 3, 5, 8, 9};
-            assertEquals(IntStreams.of(data).sorted().distinct().toArray(), expected);
-            assertEquals(IntStreams.of(data).parallel().sorted().distinct().toArray(), expected);
+            assertEquals(IntStream.of(data).sorted().distinct().toArray(), expected);
+            assertEquals(IntStream.of(data).parallel().sorted().distinct().toArray(), expected);
         }
 
         {
@@ -169,13 +169,13 @@ public class IntPrimitiveOpsTests {
             TreeSet<Long> longs = new TreeSet<>();
             for (int i : input) longs.add((long) i);
             long[] expectedLongs = StreamSupport.stream(longs).mapToLong(Long::longValue).toArray();
-            assertEquals(IntStreams.of(input).sorted().asLongStream().sorted().distinct().toArray(),
+            assertEquals(IntStream.of(input).sorted().asLongStream().sorted().distinct().toArray(),
                          expectedLongs);
 
             TreeSet<Double> doubles = new TreeSet<>();
             for (int i : input) doubles.add((double) i);
             double[] expectedDoubles = StreamSupport.stream(doubles).mapToDouble(Double::doubleValue).toArray();
-            assertEquals(IntStreams.of(input).sorted().distinct().asDoubleStream()
+            assertEquals(IntStream.of(input).sorted().distinct().asDoubleStream()
                          .sorted().distinct().toArray(), expectedDoubles);
         }
     }
@@ -183,7 +183,7 @@ public class IntPrimitiveOpsTests {
     public void testSortSort() {
         Random r = new Random();
 
-        int[] content = IntStreams.generate(() -> r.nextInt(100)).limit(10).toArray();
+        int[] content = IntStream.generate(() -> r.nextInt(100)).limit(10).toArray();
         int[] sortedContent = content.clone();
         Arrays.sort(sortedContent);
 
@@ -200,7 +200,7 @@ public class IntPrimitiveOpsTests {
 
     public void testSequential() {
 
-        int[] expected = IntStreams.range(1, 1000).toArray();
+        int[] expected = IntStream.range(1, 1000).toArray();
 
         class AssertingConsumer implements IntConsumer {
             private final int[] array;
@@ -220,27 +220,27 @@ public class IntPrimitiveOpsTests {
 
         {
             AssertingConsumer consumer = new AssertingConsumer(expected);
-            IntStreams.range(1, 1000).sequential().forEach(consumer);
+            IntStream.range(1, 1000).sequential().forEach(consumer);
             assertEquals(expected.length, consumer.getCount());
         }
 
         {
             AssertingConsumer consumer = new AssertingConsumer(expected);
-            IntStreams.range(1, 1000).parallel().sequential().forEach(consumer);
+            IntStream.range(1, 1000).parallel().sequential().forEach(consumer);
             assertEquals(expected.length, consumer.getCount());
         }
     }
 
     public void testLimit() {
-        int[] expected = IntStreams.range(1, 10).toArray();
+        int[] expected = IntStream.range(1, 10).toArray();
 
         {
-            int[] actual = IntStreams.iterate(1, i -> i + 1).limit(9).toArray();
+            int[] actual = IntStream.iterate(1, i -> i + 1).limit(9).toArray();
             Assert.assertTrue(Arrays.equals(expected, actual));
         }
 
         {
-            int[] actual = IntStreams.range(1, 100).parallel().limit(9).toArray();
+            int[] actual = IntStream.range(1, 100).parallel().limit(9).toArray();
             Assert.assertTrue(Arrays.equals(expected, actual));
         }
     }

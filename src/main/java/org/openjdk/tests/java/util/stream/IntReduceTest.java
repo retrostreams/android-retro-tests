@@ -23,7 +23,6 @@
 package org.openjdk.tests.java.util.stream;
 
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.IntStreamTestDataProvider;
 import java9.util.stream.OpTestCase;
 import java9.util.stream.TestData;
@@ -38,15 +37,15 @@ import java9.util.OptionalInt;
 
 public class IntReduceTest extends OpTestCase {
     public void testReduce() {
-        int[] a = IntStreams.range(1, 11).toArray();
+        int[] a = IntStream.range(1, 11).toArray();
 
         assertEquals(55, J8Arrays.stream(a).reduce(irPlus).getAsInt());
         assertEquals(55, J8Arrays.stream(a).reduce(0, irPlus));
         assertEquals(10, J8Arrays.stream(a).reduce(irMax).getAsInt());
         assertEquals(1, J8Arrays.stream(a).reduce(irMin).getAsInt());
 
-        assertEquals(0, IntStreams.empty().reduce(0, irPlus));
-        assertFalse(IntStreams.empty().reduce(irPlus).isPresent());
+        assertEquals(0, IntStream.empty().reduce(0, irPlus));
+        assertFalse(IntStream.empty().reduce(irPlus).isPresent());
 
         assertEquals(110, J8Arrays.stream(a).map(irDoubler).reduce(irPlus).getAsInt());
         assertEquals(20, J8Arrays.stream(a).map(irDoubler).reduce(irMax).getAsInt());

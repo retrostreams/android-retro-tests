@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java9.util.stream.Collectors;
-import java9.util.stream.RefStreams;
+import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 
 import java.util.ArrayList;
@@ -3979,8 +3979,8 @@ public class CompletableFutureTest extends JSR166TestCase {
         Predicate<Method> isNotStatic =
             method -> (method.getModifiers() & Modifier.STATIC) == 0;
         List<Method> minimalMethods =
-            RefStreams.of(Object.class, CompletionStage.class)
-            .<Method>flatMap(klazz -> RefStreams.of(klazz.getMethods()))
+            Stream.of(Object.class, CompletionStage.class)
+            .<Method>flatMap(klazz -> Stream.of(klazz.getMethods()))
             .filter(isNotStatic)
             .collect(Collectors.toList());
         // Methods from CompletableFuture permitted NOT to throw UOE
@@ -3991,10 +3991,10 @@ public class CompletableFutureTest extends JSR166TestCase {
             "copy[]",
         };
         Set<String> permittedMethodSignatures =
-            RefStreams.concat(StreamSupport.stream(minimalMethods).map(toSignature),
-                          RefStreams.of(signatureWhitelist))
+            Stream.concat(StreamSupport.stream(minimalMethods).map(toSignature),
+                          Stream.of(signatureWhitelist))
             .collect(Collectors.toSet());
-        List<Method> allMethods = RefStreams.of(CompletableFuture.class.getMethods())
+        List<Method> allMethods = Stream.of(CompletableFuture.class.getMethods())
             .filter(isNotStatic)
             .filter(method -> !permittedMethodSignatures.contains(toSignature.apply(method)))
             .collect(Collectors.toList());

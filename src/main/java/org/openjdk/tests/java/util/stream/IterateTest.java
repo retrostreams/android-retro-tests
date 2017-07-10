@@ -33,10 +33,10 @@ import static java9.util.stream.ThrowableHelper.checkNPE;
 import java.util.Arrays;
 import java.util.List;
 import java9.util.Objects;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
-import java9.util.stream.RefStreams;
+import java9.util.stream.DoubleStream;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
+import java9.util.stream.Stream;
 import java9.util.stream.OpTestCase;
 import java9.util.stream.TestData;
 import java9.util.stream.TestData.Factory;
@@ -51,33 +51,33 @@ public class IterateTest extends OpTestCase {
     public static Object[][] makeIterateStreamsTestData() {
         Object[][] data = {
             {Arrays.asList(),
-                Factory.ofSupplier("ref.empty", () -> RefStreams.iterate(1, x -> x < 0, x -> x * 2))},
+                Factory.ofSupplier("ref.empty", () -> Stream.iterate(1, x -> x < 0, x -> x * 2))},
             {Arrays.asList(1),
-                Factory.ofSupplier("ref.one", () -> RefStreams.iterate(1, x -> x < 2, x -> x * 2))},
+                Factory.ofSupplier("ref.one", () -> Stream.iterate(1, x -> x < 2, x -> x * 2))},
             {Arrays.asList(1, 2, 4, 8, 16, 32, 64, 128, 256, 512),
-                Factory.ofSupplier("ref.ten", () -> RefStreams.iterate(1, x -> x < 1000, x -> x * 2))},
+                Factory.ofSupplier("ref.ten", () -> Stream.iterate(1, x -> x < 1000, x -> x * 2))},
             {Arrays.asList(10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0),
-                Factory.ofSupplier("ref.nullCheck", () -> RefStreams.iterate(10, Objects::nonNull, x -> x > 0 ? x - 1 : null))},
+                Factory.ofSupplier("ref.nullCheck", () -> Stream.iterate(10, Objects::nonNull, x -> x > 0 ? x - 1 : null))},
             {Arrays.asList(),
-                Factory.ofIntSupplier("int.empty", () -> IntStreams.iterate(1, x -> x < 0, x -> x + 1))},
+                Factory.ofIntSupplier("int.empty", () -> IntStream.iterate(1, x -> x < 0, x -> x + 1))},
             {Arrays.asList(1),
-                Factory.ofIntSupplier("int.one", () -> IntStreams.iterate(1, x -> x < 2, x -> x + 1))},
+                Factory.ofIntSupplier("int.one", () -> IntStream.iterate(1, x -> x < 2, x -> x + 1))},
             {Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-                Factory.ofIntSupplier("int.ten", () -> IntStreams.iterate(1, x -> x <= 10, x -> x + 1))},
+                Factory.ofIntSupplier("int.ten", () -> IntStream.iterate(1, x -> x <= 10, x -> x + 1))},
             {Arrays.asList(5, 4, 3, 2, 1),
-                Factory.ofIntSupplier("int.divZero", () -> IntStreams.iterate(5, x -> x != 0, x -> x - 1/x/2 - 1))},
+                Factory.ofIntSupplier("int.divZero", () -> IntStream.iterate(5, x -> x != 0, x -> x - 1/x/2 - 1))},
             {Arrays.asList(),
-                Factory.ofLongSupplier("long.empty", () -> LongStreams.iterate(1L, x -> x < 0, x -> x + 1))},
+                Factory.ofLongSupplier("long.empty", () -> LongStream.iterate(1L, x -> x < 0, x -> x + 1))},
             {Arrays.asList(1L),
-                Factory.ofLongSupplier("long.one", () -> LongStreams.iterate(1L, x -> x < 2, x -> x + 1))},
+                Factory.ofLongSupplier("long.one", () -> LongStream.iterate(1L, x -> x < 2, x -> x + 1))},
             {Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L),
-                Factory.ofLongSupplier("long.ten", () -> LongStreams.iterate(1L, x -> x <= 10, x -> x + 1))},
+                Factory.ofLongSupplier("long.ten", () -> LongStream.iterate(1L, x -> x <= 10, x -> x + 1))},
             {Arrays.asList(),
-                Factory.ofDoubleSupplier("double.empty", () -> DoubleStreams.iterate(1.0, x -> x < 0, x -> x + 1))},
+                Factory.ofDoubleSupplier("double.empty", () -> DoubleStream.iterate(1.0, x -> x < 0, x -> x + 1))},
             {Arrays.asList(1.0),
-                Factory.ofDoubleSupplier("double.one", () -> DoubleStreams.iterate(1.0, x -> x < 2, x -> x + 1))},
+                Factory.ofDoubleSupplier("double.one", () -> DoubleStream.iterate(1.0, x -> x < 2, x -> x + 1))},
             {Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0),
-                Factory.ofDoubleSupplier("double.ten", () -> DoubleStreams.iterate(1.0, x -> x <= 10, x -> x + 1))}
+                Factory.ofDoubleSupplier("double.ten", () -> DoubleStream.iterate(1.0, x -> x <= 10, x -> x + 1))}
         };
         return data;
     }
@@ -89,13 +89,13 @@ public class IterateTest extends OpTestCase {
 
     @Test
     public void testNPE() {
-        checkNPE(() -> RefStreams.iterate("", null, x -> x + "a"));
-        checkNPE(() -> RefStreams.iterate("", String::isEmpty, null));
-        checkNPE(() -> IntStreams.iterate(0, null, x -> x + 1));
-        checkNPE(() -> IntStreams.iterate(0, x -> x < 10, null));
-        checkNPE(() -> LongStreams.iterate(0, null, x -> x + 1));
-        checkNPE(() -> LongStreams.iterate(0, x -> x < 10, null));
-        checkNPE(() -> DoubleStreams.iterate(0, null, x -> x + 1));
-        checkNPE(() -> DoubleStreams.iterate(0, x -> x < 10, null));
+        checkNPE(() -> Stream.iterate("", null, x -> x + "a"));
+        checkNPE(() -> Stream.iterate("", String::isEmpty, null));
+        checkNPE(() -> IntStream.iterate(0, null, x -> x + 1));
+        checkNPE(() -> IntStream.iterate(0, x -> x < 10, null));
+        checkNPE(() -> LongStream.iterate(0, null, x -> x + 1));
+        checkNPE(() -> LongStream.iterate(0, x -> x < 10, null));
+        checkNPE(() -> DoubleStream.iterate(0, null, x -> x + 1));
+        checkNPE(() -> DoubleStream.iterate(0, x -> x < 10, null));
     }
 }

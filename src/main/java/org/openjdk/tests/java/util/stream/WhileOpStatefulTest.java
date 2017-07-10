@@ -36,9 +36,7 @@ import java9.util.function.Function;
 import java9.util.function.Supplier;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.DefaultMethodStreams;
@@ -218,9 +216,9 @@ public class WhileOpStatefulTest extends OpTestCase {
                                     Consumer<LongStream> mLong,
                                     Consumer<DoubleStream> mDouble) {
         Map<String, Supplier<Stream<Integer>>> sources = new HashMap<>();
-        sources.put("Stream.generate()", () -> RefStreams.generate(() -> 1));
-        sources.put("Stream.iterate()", () -> RefStreams.iterate(1, x -> 1));
-        sources.put("Stream.iterate().unordered()", () -> RefStreams.iterate(1, x -> 1));
+        sources.put("Stream.generate()", () -> Stream.generate(() -> 1));
+        sources.put("Stream.iterate()", () -> Stream.iterate(1, x -> 1));
+        sources.put("Stream.iterate().unordered()", () -> Stream.iterate(1, x -> 1));
         testWhileMulti(sources, mRef, mInt, mLong, mDouble);
     }
 
@@ -230,15 +228,15 @@ public class WhileOpStatefulTest extends OpTestCase {
                                     Consumer<DoubleStream> mDouble) {
         Map<String, Supplier<Stream<Integer>>> sources = new HashMap<>();
         sources.put("IntStream.range().boxed()",
-                    () -> IntStreams.range(0, DROP_SOURCE_SIZE).boxed());
+                    () -> IntStream.range(0, DROP_SOURCE_SIZE).boxed());
         sources.put("IntStream.range().boxed().unordered()",
-                    () -> IntStreams.range(0, DROP_SOURCE_SIZE).boxed().unordered());
+                    () -> IntStream.range(0, DROP_SOURCE_SIZE).boxed().unordered());
         sources.put("LinkedList.stream()",
-                    () -> StreamSupport.stream(IntStreams.range(0, DROP_SOURCE_SIZE).boxed()
+                    () -> StreamSupport.stream(IntStream.range(0, DROP_SOURCE_SIZE).boxed()
                             .collect(toCollection(LinkedList::new))
                             ));
         sources.put("LinkedList.stream().unordered()",
-                    () -> StreamSupport.stream(IntStreams.range(0, DROP_SOURCE_SIZE).boxed()
+                    () -> StreamSupport.stream(IntStream.range(0, DROP_SOURCE_SIZE).boxed()
                             .collect(toCollection(LinkedList::new))
                             )
                             .unordered());

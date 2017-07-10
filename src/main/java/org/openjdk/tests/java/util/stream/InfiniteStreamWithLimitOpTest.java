@@ -39,7 +39,6 @@ import java9.util.function.UnaryOperator;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
 import java9.util.stream.LongStream;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.DoubleStreamTestScenario;
@@ -49,9 +48,6 @@ import java9.util.stream.LongStreamTestScenario;
 import java9.util.stream.OpTestCase;
 import java9.util.stream.StreamTestScenario;
 import java9.util.stream.TestData;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
 
 
 @Test
@@ -143,7 +139,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     private TestData.OfRef<Long> refLongRange(long l, long u) {
         return TestData.Factory.ofSupplier(
                 String.format("[%d, %d)", l, u),
-                () -> LongStreams.range(l, u).boxed());
+                () -> LongStream.range(l, u).boxed());
     }
 
     private TestData.OfInt ints() {
@@ -153,7 +149,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     private TestData.OfInt intRange(int l, int u) {
         return TestData.Factory.ofIntSupplier(
                 String.format("[%d, %d)", l, u),
-                () -> IntStreams.range(l, u));
+                () -> IntStream.range(l, u));
     }
 
     private TestData.OfLong longs() {
@@ -163,7 +159,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     private TestData.OfLong longRange(long l, long u) {
         return TestData.Factory.ofLongSupplier(
                 String.format("[%d, %d)", l, u),
-                () -> LongStreams.range(l, u));
+                () -> LongStream.range(l, u));
     }
 
     private TestData.OfDouble doubles() {
@@ -173,7 +169,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     private TestData.OfDouble doubleRange(long l, long u) {
         return TestData.Factory.ofDoubleSupplier(
                 String.format("[%d, %d)", l, u),
-                () -> LongStreams.range(l, u).mapToDouble(i -> (double) i));
+                () -> LongStream.range(l, u).mapToDouble(i -> (double) i));
     }
 
 
@@ -367,7 +363,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     private TestData.OfLong proxiedLongRange(long l, long u) {
         return TestData.Factory.ofLongSupplier(
                 String.format("[%d, %d)", l, u),
-                () -> StreamSupport.longStream(proxyNotSubsized(LongStreams.range(l, u).spliterator()), false));
+                () -> StreamSupport.longStream(proxyNotSubsized(LongStream.range(l, u).spliterator()), false));
     }
 
     @Test(dataProvider = "Stream.limit")
@@ -424,7 +420,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testUnorderedGenerator(String description, UnaryOperator<Stream<Long>> fs) {
         // Source is spliterator of infinite size
         TestData.OfRef<Long> generator = TestData.Factory.ofSupplier(
-                "[1L, 1L, ...]", () -> RefStreams.generate(() -> 1L));
+                "[1L, 1L, ...]", () -> Stream.generate(() -> 1L));
 
         withData(generator).
                 stream((Stream<Long> s) -> fs.apply(s.filter(i -> true).unordered())).
@@ -435,7 +431,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testIntUnorderedGenerator(String description, UnaryOperator<IntStream> fs) {
         // Source is spliterator of infinite size
         TestData.OfInt generator = TestData.Factory.ofIntSupplier(
-                "[1, 1, ...]", () -> IntStreams.generate(() -> 1));
+                "[1, 1, ...]", () -> IntStream.generate(() -> 1));
 
         withData(generator).
                 stream((IntStream s) -> fs.apply(s.filter(i -> true).unordered())).
@@ -446,7 +442,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testLongUnorderedGenerator(String description, UnaryOperator<LongStream> fs) {
         // Source is spliterator of infinite size
         TestData.OfLong generator = TestData.Factory.ofLongSupplier(
-                "[1L, 1L, ...]", () -> LongStreams.generate(() -> 1));
+                "[1L, 1L, ...]", () -> LongStream.generate(() -> 1));
 
         withData(generator).
                 stream((LongStream s) -> fs.apply(s.filter(i -> true).unordered())).
@@ -457,7 +453,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testDoubleUnorderedGenerator(String description, UnaryOperator<DoubleStream> fs) {
         // Source is spliterator of infinite size
         TestData.OfDouble generator = TestData.Factory.ofDoubleSupplier(
-                "[1.0, 1.0, ...]", () -> DoubleStreams.generate(() -> 1.0));
+                "[1.0, 1.0, ...]", () -> DoubleStream.generate(() -> 1.0));
 
         withData(generator).
                 stream((DoubleStream s) -> fs.apply(s.filter(i -> true).unordered())).
@@ -470,7 +466,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testUnorderedIteration(String description, UnaryOperator<Stream<Long>> fs) {
         // Source is a right-balanced tree of infinite size
         TestData.OfRef<Long> iterator = TestData.Factory.ofSupplier(
-                "[1L, 2L, 3L, ...]", () -> RefStreams.iterate(1L, i -> i + 1L));
+                "[1L, 2L, 3L, ...]", () -> Stream.iterate(1L, i -> i + 1L));
 
         // Ref
         withData(iterator).
@@ -483,7 +479,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testIntUnorderedIteration(String description, UnaryOperator<IntStream> fs) {
         // Source is a right-balanced tree of infinite size
         TestData.OfInt iterator = TestData.Factory.ofIntSupplier(
-                "[1, 2, 3, ...]", () -> IntStreams.iterate(1, i -> i + 1));
+                "[1, 2, 3, ...]", () -> IntStream.iterate(1, i -> i + 1));
 
         // Ref
         withData(iterator).
@@ -496,7 +492,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testLongUnorderedIteration(String description, UnaryOperator<LongStream> fs) {
         // Source is a right-balanced tree of infinite size
         TestData.OfLong iterator = TestData.Factory.ofLongSupplier(
-                "[1L, 2L, 3L, ...]", () -> LongStreams.iterate(1, i -> i + 1));
+                "[1L, 2L, 3L, ...]", () -> LongStream.iterate(1, i -> i + 1));
 
         // Ref
         withData(iterator).
@@ -509,7 +505,7 @@ public class InfiniteStreamWithLimitOpTest extends OpTestCase {
     public void testDoubleUnorderedIteration(String description, UnaryOperator<DoubleStream> fs) {
         // Source is a right-balanced tree of infinite size
         TestData.OfDouble iterator = TestData.Factory.ofDoubleSupplier(
-                "[1.0, 2.0, 3.0, ...]", () -> DoubleStreams.iterate(1, i -> i + 1));
+                "[1.0, 2.0, 3.0, ...]", () -> DoubleStream.iterate(1, i -> i + 1));
 
         // Ref
         withData(iterator).

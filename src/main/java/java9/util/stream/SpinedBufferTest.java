@@ -36,8 +36,8 @@ import java9.util.function.DoubleConsumer;
 import java9.util.function.IntConsumer;
 import java9.util.function.LongConsumer;
 import java9.util.stream.Collectors;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
 import java9.util.stream.SpinedBuffer;
 
 import static org.testng.Assert.assertEquals;
@@ -50,7 +50,7 @@ public class SpinedBufferTest {
     static List<Integer> sizes;
     static {
         try {
-            sizes = IntStreams.range(0, 15)
+            sizes = IntStream.range(0, 15)
                              .map(i -> 1 << i)
                              .flatMap(i -> J8Arrays.stream(new int[] { i-2, i-1, i, i+1, i+2 }))
                              .filter(i -> i >= 0)
@@ -72,7 +72,7 @@ public class SpinedBufferTest {
         List<Object[]> params = new ArrayList<>();
 
         for (int size : sizes) {
-            int[] array = IntStreams.range(0, size).toArray();
+            int[] array = IntStream.range(0, size).toArray();
 
             SpinedBuffer<Integer> sb = new SpinedBuffer<>();
             J8Arrays.stream(array).boxed().forEach(sb);
@@ -159,7 +159,7 @@ public class SpinedBufferTest {
         List<Object[]> params = new ArrayList<>();
 
         for (int size : sizes) {
-            int[] array = IntStreams.range(0, size).toArray();
+            int[] array = IntStream.range(0, size).toArray();
             SpinedBuffer.OfInt sb = new SpinedBuffer.OfInt();
             J8Arrays.stream(array).forEach(sb);
 
@@ -234,7 +234,7 @@ public class SpinedBufferTest {
         List<Object[]> params = new ArrayList<>();
 
         for (int size : sizes) {
-            long[] array = LongStreams.range(0, size).toArray();
+            long[] array = LongStream.range(0, size).toArray();
             SpinedBuffer.OfLong sb = new SpinedBuffer.OfLong();
             J8Arrays.stream(array).forEach(sb);
 
@@ -310,7 +310,7 @@ public class SpinedBufferTest {
 
         for (int size : sizes) {
             // @@@ replace with double range when implemented
-            double[] array = LongStreams.range(0, size).asDoubleStream().toArray();
+            double[] array = LongStream.range(0, size).asDoubleStream().toArray();
             SpinedBuffer.OfDouble sb = new SpinedBuffer.OfDouble();
             J8Arrays.stream(array).forEach(sb);
 

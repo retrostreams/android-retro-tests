@@ -36,7 +36,7 @@ import java9.util.Spliterator;
 import java9.util.concurrent.ThreadLocalRandom;
 import java9.util.function.LongConsumer;
 import java9.util.stream.Collectors;
-import java9.util.stream.LongStreams;
+import java9.util.stream.LongStream;
 import java9.util.stream.StreamSupport;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -50,43 +50,43 @@ import static org.testng.Assert.assertTrue;
 public class LongPrimitiveOpsTests {
 
     public void testSum() {
-        long sum = LongStreams.range(1, 10).filter(i -> i % 2 == 0).sum();
+        long sum = LongStream.range(1, 10).filter(i -> i % 2 == 0).sum();
         assertEquals(sum, 20);
     }
 
     public void testMap() {
-        long sum = LongStreams.range(1, 10).filter(i -> i % 2 == 0).map(i -> i * 2).sum();
+        long sum = LongStream.range(1, 10).filter(i -> i % 2 == 0).map(i -> i * 2).sum();
         assertEquals(sum, 40);
     }
 
     public void testParSum() {
-        long sum = LongStreams.range(1, 10).parallel().filter(i -> i % 2 == 0).sum();
+        long sum = LongStream.range(1, 10).parallel().filter(i -> i % 2 == 0).sum();
         assertEquals(sum, 20);
     }
 
     @Test(groups = { "serialization-hostile" })
     public void testTee() {
         long[] teeSum = new long[1];
-        long sum = LongStreams.range(1, 10).filter(i -> i % 2 == 0).peek(i -> { teeSum[0] = teeSum[0] + i; }).sum();
+        long sum = LongStream.range(1, 10).filter(i -> i % 2 == 0).peek(i -> { teeSum[0] = teeSum[0] + i; }).sum();
         assertEquals(teeSum[0], sum);
     }
 
     @Test(groups = { "serialization-hostile" })
     public void testForEach() {
         long[] sum = new long[1];
-        LongStreams.range(1, 10).filter(i -> i % 2 == 0).forEach(i -> { sum[0] = sum[0] + i; });
+        LongStream.range(1, 10).filter(i -> i % 2 == 0).forEach(i -> { sum[0] = sum[0] + i; });
         assertEquals(sum[0], 20);
     }
 
     @Test(groups = { "serialization-hostile" })
     public void testParForEach() {
         AtomicLong ai = new AtomicLong(0);
-        LongStreams.range(1, 10).parallel().filter(i -> i % 2 == 0).forEach(ai::addAndGet);
+        LongStream.range(1, 10).parallel().filter(i -> i % 2 == 0).forEach(ai::addAndGet);
         assertEquals(ai.get(), 20);
     }
 
     public void testBox() {
-        List<Long> l = LongStreams.range(1, 10).parallel().boxed().collect(Collectors.toList());
+        List<Long> l = LongStream.range(1, 10).parallel().boxed().collect(Collectors.toList());
         long sum = StreamSupport.stream(l).reduce(0L, (a, b) -> a + b);
         assertEquals(sum, 45);
     }
@@ -97,29 +97,29 @@ public class LongPrimitiveOpsTests {
     }
 
     public void testFlags() {
-        assertTrue(LongStreams.range(1, 10).boxed().spliterator()
+        assertTrue(LongStream.range(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.SORTED | Spliterator.DISTINCT));
-        assertFalse(LongStreams.of(1, 10).boxed().spliterator()
+        assertFalse(LongStream.of(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
-        assertFalse(LongStreams.of(1, 10).boxed().spliterator()
+        assertFalse(LongStream.of(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.DISTINCT));
 
-        assertTrue(LongStreams.range(1, 10).asDoubleStream().spliterator()
+        assertTrue(LongStream.range(1, 10).asDoubleStream().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
-        assertFalse(LongStreams.range(1, 10).asDoubleStream().spliterator()
+        assertFalse(LongStream.range(1, 10).asDoubleStream().spliterator()
                       .hasCharacteristics(Spliterator.DISTINCT));
-        assertFalse(LongStreams.of(1, 10).asDoubleStream().spliterator()
+        assertFalse(LongStream.of(1, 10).asDoubleStream().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
     }
 
     public void testToArray() {
         {
-            long[] array =  LongStreams.range(1, 10).map(i -> i * 2).toArray();
+            long[] array =  LongStream.range(1, 10).map(i -> i * 2).toArray();
             assertEquals(array, new long[]{2, 4, 6, 8, 10, 12, 14, 16, 18});
         }
 
         {
-            long[] array =  LongStreams.range(1, 10).parallel().map(i -> i * 2).toArray();
+            long[] array =  LongStream.range(1, 10).parallel().map(i -> i * 2).toArray();
             assertEquals(array, new long[]{2, 4, 6, 8, 10, 12, 14, 16, 18});
         }
     }
@@ -127,7 +127,7 @@ public class LongPrimitiveOpsTests {
     public void testSort() {
         Random r = new Random();
 
-        long[] content = LongStreams.generate(() -> r.nextLong()).limit(10).toArray();
+        long[] content = LongStream.generate(() -> r.nextLong()).limit(10).toArray();
         long[] sortedContent = content.clone();
         Arrays.sort(sortedContent);
 
@@ -144,17 +144,17 @@ public class LongPrimitiveOpsTests {
 
     public void testSortDistinct() {
         {
-            long[] range = LongStreams.range(0, 10).toArray();
+            long[] range = LongStream.range(0, 10).toArray();
 
-            assertEquals(LongStreams.range(0, 10).sorted().distinct().toArray(), range);
-            assertEquals(LongStreams.range(0, 10).parallel().sorted().distinct().toArray(), range);
+            assertEquals(LongStream.range(0, 10).sorted().distinct().toArray(), range);
+            assertEquals(LongStream.range(0, 10).parallel().sorted().distinct().toArray(), range);
         }
 
         {
             long[] data = {5, 3, 1, 1, 5, 3, 9, 2, 9, 1, 0, 8};
             long[] expected = {0, 1, 2, 3, 5, 8, 9};
-            assertEquals(LongStreams.of(data).sorted().distinct().toArray(), expected);
-            assertEquals(LongStreams.of(data).parallel().sorted().distinct().toArray(), expected);
+            assertEquals(LongStream.of(data).sorted().distinct().toArray(), expected);
+            assertEquals(LongStream.of(data).parallel().sorted().distinct().toArray(), expected);
         }
 
         {
@@ -163,7 +163,7 @@ public class LongPrimitiveOpsTests {
             TreeSet<Double> doubles = new TreeSet<>();
             for (long i : input) doubles.add((double) i);
             double[] expectedDoubles = StreamSupport.stream(doubles).mapToDouble(Double::doubleValue).toArray();
-            assertEquals(LongStreams.of(input).sorted().distinct().asDoubleStream()
+            assertEquals(LongStream.of(input).sorted().distinct().asDoubleStream()
                          .sorted().distinct().toArray(), expectedDoubles);
         }
     }
@@ -171,7 +171,7 @@ public class LongPrimitiveOpsTests {
     public void testSortSort() {
         Random r = new Random();
 
-        long[] content = LongStreams.generate(() -> r.nextLong()).limit(10).toArray();
+        long[] content = LongStream.generate(() -> r.nextLong()).limit(10).toArray();
         long[] sortedContent = content.clone();
         Arrays.sort(sortedContent);
 
@@ -188,7 +188,7 @@ public class LongPrimitiveOpsTests {
 
     public void testSequential() {
 
-        long[] expected = LongStreams.range(1, 1000).toArray();
+        long[] expected = LongStream.range(1, 1000).toArray();
 
         class AssertingConsumer implements LongConsumer {
             private final long[] array;
@@ -208,27 +208,27 @@ public class LongPrimitiveOpsTests {
 
         {
             AssertingConsumer consumer = new AssertingConsumer(expected);
-            LongStreams.range(1, 1000).sequential().forEach(consumer);
+            LongStream.range(1, 1000).sequential().forEach(consumer);
             assertEquals(expected.length, consumer.getCount());
         }
 
         {
             AssertingConsumer consumer = new AssertingConsumer(expected);
-            LongStreams.range(1, 1000).parallel().sequential().forEach(consumer);
+            LongStream.range(1, 1000).parallel().sequential().forEach(consumer);
             assertEquals(expected.length, consumer.getCount());
         }
     }
 
     public void testLimit() {
-        long[] expected = LongStreams.range(1, 10).toArray();
+        long[] expected = LongStream.range(1, 10).toArray();
 
         {
-            long[] actual = LongStreams.iterate(1, i -> i + 1).limit(9).toArray();
+            long[] actual = LongStream.iterate(1, i -> i + 1).limit(9).toArray();
             Assert.assertTrue(Arrays.equals(expected, actual));
         }
 
         {
-            long[] actual = LongStreams.range(1, 100).parallel().limit(9).toArray();
+            long[] actual = LongStream.range(1, 100).parallel().limit(9).toArray();
             Assert.assertTrue(Arrays.equals(expected, actual));
         }
     }

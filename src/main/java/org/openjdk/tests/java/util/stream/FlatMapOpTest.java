@@ -40,10 +40,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import java9.util.function.Function;
 import java9.util.function.Supplier;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.RefStreams;
+import java9.util.stream.DoubleStream;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.DoubleStreamTestDataProvider;
@@ -57,14 +56,14 @@ import java9.util.stream.TestData;
 public class FlatMapOpTest extends OpTestCase {
 
     public void testNullMapper() {
-        checkNPE(() -> RefStreams.of(1).flatMap(null));
-        checkNPE(() -> IntStreams.of(1).flatMap(null));
-        checkNPE(() -> LongStreams.of(1).flatMap(null));
-        checkNPE(() -> DoubleStreams.of(1).flatMap(null));
+        checkNPE(() -> Stream.of(1).flatMap(null));
+        checkNPE(() -> IntStream.of(1).flatMap(null));
+        checkNPE(() -> LongStream.of(1).flatMap(null));
+        checkNPE(() -> DoubleStream.of(1).flatMap(null));
     }
 
     static final Function<Integer, Stream<Integer>> integerRangeMapper
-            = e -> IntStreams.range(0, e).boxed();
+            = e -> IntStream.range(0, e).boxed();
 
     public void testFlatMap() {
         String[] stringsArray = {"hello", "there", "", "yada"};
@@ -86,19 +85,19 @@ public class FlatMapOpTest extends OpTestCase {
 
         Supplier<Stream<Integer>> s = () -> {
             before.set(0); onClose.set(0);
-            return RefStreams.of(1, 2).peek(e -> before.getAndIncrement());
+            return Stream.of(1, 2).peek(e -> before.getAndIncrement());
         };
 
-        s.get().flatMap(i -> RefStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        s.get().flatMap(i -> Stream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
 
-        s.get().flatMapToInt(i -> IntStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        s.get().flatMapToInt(i -> IntStream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
 
-        s.get().flatMapToLong(i -> LongStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        s.get().flatMapToLong(i -> LongStream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
 
-        s.get().flatMapToDouble(i -> DoubleStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        s.get().flatMapToDouble(i -> DoubleStream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
     }
 
@@ -107,8 +106,8 @@ public class FlatMapOpTest extends OpTestCase {
         AtomicInteger before = new AtomicInteger();
         AtomicInteger onClose = new AtomicInteger();
 
-        IntStreams.of(1, 2).peek(e -> before.getAndIncrement()).
-                flatMap(i -> IntStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        IntStream.of(1, 2).peek(e -> before.getAndIncrement()).
+                flatMap(i -> IntStream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
     }
 
@@ -117,8 +116,8 @@ public class FlatMapOpTest extends OpTestCase {
         AtomicInteger before = new AtomicInteger();
         AtomicInteger onClose = new AtomicInteger();
 
-        LongStreams.of(1, 2).peek(e -> before.getAndIncrement()).
-                flatMap(i -> LongStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        LongStream.of(1, 2).peek(e -> before.getAndIncrement()).
+                flatMap(i -> LongStream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
     }
 
@@ -127,8 +126,8 @@ public class FlatMapOpTest extends OpTestCase {
         AtomicInteger before = new AtomicInteger();
         AtomicInteger onClose = new AtomicInteger();
 
-        DoubleStreams.of(1, 2).peek(e -> before.getAndIncrement()).
-                flatMap(i -> DoubleStreams.of(i, i).onClose(onClose::getAndIncrement)).count();
+        DoubleStream.of(1, 2).peek(e -> before.getAndIncrement()).
+                flatMap(i -> DoubleStream.of(i, i).onClose(onClose::getAndIncrement)).count();
         assertEquals(before.get(), onClose.get());
     }
 
@@ -140,7 +139,7 @@ public class FlatMapOpTest extends OpTestCase {
         result = exerciseOps(data, s -> s.flatMap(mfNull));
         assertEquals(0, result.size());
 
-        result = exerciseOps(data, s-> s.flatMap(e -> RefStreams.empty()));
+        result = exerciseOps(data, s-> s.flatMap(e -> Stream.empty()));
         assertEquals(0, result.size());
     }
 
@@ -148,7 +147,7 @@ public class FlatMapOpTest extends OpTestCase {
     public void testOpsX(String name, TestData.OfRef<Integer> data) {
         exerciseOps(data, s -> s.flatMap(mfLt));
         exerciseOps(data, s -> s.flatMap(integerRangeMapper));
-        exerciseOps(data, s -> s.flatMap((Integer e) -> IntStreams.range(0, e).boxed().limit(10)));
+        exerciseOps(data, s -> s.flatMap((Integer e) -> IntStream.range(0, e).boxed().limit(10)));
     }
 
     //
@@ -159,14 +158,14 @@ public class FlatMapOpTest extends OpTestCase {
         assertEquals(data.size(), result.size());
         assertContents(data, result);
 
-        result = exerciseOps(data, s -> s.flatMap(i -> IntStreams.empty()));
+        result = exerciseOps(data, s -> s.flatMap(i -> IntStream.empty()));
         assertEquals(0, result.size());
     }
 
     @Test(dataProvider = "IntStreamTestData.small", dataProviderClass = IntStreamTestDataProvider.class)
     public void testIntOpsX(String name, TestData.OfInt data) {
-        exerciseOps(data, s -> s.flatMap(e -> IntStreams.range(0, e)));
-        exerciseOps(data, s -> s.flatMap(e -> IntStreams.range(0, e).limit(10)));
+        exerciseOps(data, s -> s.flatMap(e -> IntStream.range(0, e)));
+        exerciseOps(data, s -> s.flatMap(e -> IntStream.range(0, e).limit(10)));
     }
 
     //
@@ -177,14 +176,14 @@ public class FlatMapOpTest extends OpTestCase {
         assertEquals(data.size(), result.size());
         assertContents(data, result);
 
-        result = exerciseOps(data, s -> LongStreams.empty());
+        result = exerciseOps(data, s -> LongStream.empty());
         assertEquals(0, result.size());
     }
 
     @Test(dataProvider = "LongStreamTestData.small", dataProviderClass = LongStreamTestDataProvider.class)
     public void testLongOpsX(String name, TestData.OfLong data) {
-        exerciseOps(data, s -> s.flatMap(e -> LongStreams.range(0, e)));
-        exerciseOps(data, s -> s.flatMap(e -> LongStreams.range(0, e).limit(10)));
+        exerciseOps(data, s -> s.flatMap(e -> LongStream.range(0, e)));
+        exerciseOps(data, s -> s.flatMap(e -> LongStream.range(0, e).limit(10)));
     }
 
     //
@@ -195,13 +194,13 @@ public class FlatMapOpTest extends OpTestCase {
         assertEquals(data.size(), result.size());
         assertContents(data, result);
 
-        result = exerciseOps(data, s -> DoubleStreams.empty());
+        result = exerciseOps(data, s -> DoubleStream.empty());
         assertEquals(0, result.size());
     }
 
     @Test(dataProvider = "DoubleStreamTestData.small", dataProviderClass = DoubleStreamTestDataProvider.class)
     public void testDoubleOpsX(String name, TestData.OfDouble data) {
-        exerciseOps(data, s -> s.flatMap(e -> IntStreams.range(0, (int) e).asDoubleStream()));
-        exerciseOps(data, s -> s.flatMap(e -> IntStreams.range(0, (int) e).limit(10).asDoubleStream()));
+        exerciseOps(data, s -> s.flatMap(e -> IntStream.range(0, (int) e).asDoubleStream()));
+        exerciseOps(data, s -> s.flatMap(e -> IntStream.range(0, (int) e).limit(10).asDoubleStream()));
     }
 }

@@ -45,9 +45,7 @@ import java9.util.function.Function;
 import java9.util.stream.Collectors;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.LambdaTestHelpers;
@@ -244,7 +242,7 @@ public class SliceOpTest extends OpTestCase {
                 return s.getComparator();
             }
         }
-        List<Integer> list = IntStreams.range(0, 100).boxed().collect(Collectors.toList());
+        List<Integer> list = IntStream.range(0, 100).boxed().collect(Collectors.toList());
         TestData.OfRef<Integer> data = TestData.Factory.ofSupplier(
                 "Non splitting, not SUBSIZED, ORDERED, stream",
                 () -> StreamSupport.stream(new NonSplittingNotSubsizedOrderedSpliterator<>(Spliterators.spliterator(list, Spliterator.ORDERED)), false));
@@ -358,10 +356,10 @@ public class SliceOpTest extends OpTestCase {
 
     public void testLimitParallelHugeInput() {
         for (int n : new int[] {10, 100, 1000, 10000}) {
-            long[] actual = LongStreams.range(0, Long.MAX_VALUE)
+            long[] actual = LongStream.range(0, Long.MAX_VALUE)
                                   .parallel().filter(x -> true) // remove SIZED
                                   .limit(n).toArray();
-            assertEquals(LongStreams.range(0, n).toArray(), actual);
+            assertEquals(LongStream.range(0, n).toArray(), actual);
         }
     }
 }

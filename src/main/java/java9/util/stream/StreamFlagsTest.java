@@ -31,7 +31,6 @@ import java.util.TreeSet;
 
 import org.testng.annotations.Test;
 
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamOpFlag;
 import java9.util.stream.StreamSupport;
@@ -53,7 +52,7 @@ public class StreamFlagsTest {
     Stream<String> hashSet = StreamSupport.stream(new HashSet<String>());
     Stream<String> treeSet = StreamSupport.stream(new TreeSet<String>());
     Stream<String> linkedHashSet = StreamSupport.stream(new LinkedHashSet<String>());
-    Stream<String> repeat = RefStreams.generate(() -> "");
+    Stream<String> repeat = Stream.generate(() -> "");
 
     Stream<?>[] streams = { arrayList, linkedList, hashSet, treeSet, linkedHashSet, repeat };
 
@@ -66,7 +65,7 @@ public class StreamFlagsTest {
 
     public void testStreamSupportGenerate() {
 
-        Stream<String> repeat = RefStreams.generate(() -> "");
+        Stream<String> repeat = Stream.generate(() -> "");
 
         assertFlags(OpTestCase.getStreamFlags(repeat),
                     EnumSet.noneOf(StreamOpFlag.class),

@@ -35,7 +35,7 @@ import java9.util.function.BiConsumer;
 import java9.util.function.Function;
 import java9.util.function.IntFunction;
 import java9.util.function.Supplier;
-import java9.util.stream.IntStreams;
+import java9.util.stream.IntStream;
 import java9.util.stream.Stream;
 
 import org.testng.annotations.Test;
@@ -166,7 +166,7 @@ public class ConcurrentAssociateTest {
             }
         };
 
-        Stream<CompletableFuture<Void>> putters = IntStreams.range(0, availableProcessors)
+        Stream<CompletableFuture<Void>> putters = IntStream.range(0, availableProcessors)
                 .mapToObj(new IntFunction<Runnable>() {
                     public Runnable apply(int i) {
                         return putter.get();

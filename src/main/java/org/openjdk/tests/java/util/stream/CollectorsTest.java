@@ -51,7 +51,6 @@ import java9.util.function.Predicate;
 import java9.util.function.Supplier;
 import java9.util.stream.Collector;
 import java9.util.stream.Collectors;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.LambdaTestHelpers;
 import java9.util.stream.OpTestCase;
@@ -546,8 +545,8 @@ public class CollectorsTest extends OpTestCase {
     public void testFlatMappingClose() {
         Function<Integer, Integer> classifier = i -> i;
         AtomicInteger ai = new AtomicInteger();
-        Function<Integer, Stream<Integer>> flatMapper = i -> RefStreams.of(i, i).onClose(ai::getAndIncrement);
-        Map<Integer, List<Integer>> m = RefStreams.of(1, 2).collect(groupingBy(classifier, flatMapping(flatMapper, toList())));
+        Function<Integer, Stream<Integer>> flatMapper = i -> Stream.of(i, i).onClose(ai::getAndIncrement);
+        Map<Integer, List<Integer>> m = Stream.of(1, 2).collect(groupingBy(classifier, flatMapping(flatMapper, toList())));
         assertEquals(m.size(), ai.get());
     }
 
@@ -555,8 +554,8 @@ public class CollectorsTest extends OpTestCase {
     public void testGroupingByWithFlatMapping(String name, TestData.OfRef<Integer> data) throws Exception {
         Function<Integer, Integer> classifier = i -> i % 3;
         Function<Integer, Stream<Integer>> flatMapperByNull = i -> null;
-        Function<Integer, Stream<Integer>> flatMapperBy0 = i -> RefStreams.empty();
-        Function<Integer, Stream<Integer>> flatMapperBy2 = i -> RefStreams.of(i, i);
+        Function<Integer, Stream<Integer>> flatMapperBy0 = i -> Stream.empty();
+        Function<Integer, Stream<Integer>> flatMapperBy2 = i -> Stream.of(i, i);
 
         exerciseMapCollection(data,
                               groupingBy(classifier, flatMapping(flatMapperByNull, toList())),

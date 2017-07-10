@@ -80,7 +80,6 @@ import java9.util.stream.Collector;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
 import java9.util.stream.LongStream;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 
 import static java9.util.stream.Collectors.*;
@@ -97,7 +96,7 @@ public final class DefaultMethodStreams {
 
     static void verify(Class<?> del) {
         // Find the stream interface
-        Class<?> s = RefStreams.of(del.getInterfaces())
+        Class<?> s = Stream.of(del.getInterfaces())
                 .filter(c -> BaseStream.class.isAssignableFrom(c))
                 .findFirst().get();
 
@@ -110,7 +109,7 @@ public final class DefaultMethodStreams {
 //                .collect(toSet());
 
         // Get all methods on the delegating class
-        Set<String> ims = RefStreams.of(del.getMethods())
+        Set<String> ims = Stream.of(del.getMethods())
                 .filter(m -> !Modifier.isStatic(m.getModifiers()))
                 .filter(m -> m.getDeclaringClass() == del)
                 .map(Method::getName)

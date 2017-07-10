@@ -27,7 +27,6 @@ import java.util.Collection;
 import org.testng.annotations.Test;
 
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.*;
 
 import static java9.util.stream.LambdaTestHelpers.assertCountSum;
@@ -47,51 +46,51 @@ public class IntSliceOpTest extends OpTestCase {
     private static final int[] EMPTY_INT_ARRAY = new int[0];
 
     public void testSkip() {
-        assertCountSum(IntStreams.range(0, 0).skip(0).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(0, 0).skip(4).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 5).skip(4).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 5).skip(2).boxed(), 2, 7);
-        assertCountSum(IntStreams.range(1, 5).skip(0).boxed(), 4, 10);
+        assertCountSum(IntStream.range(0, 0).skip(0).boxed(), 0, 0);
+        assertCountSum(IntStream.range(0, 0).skip(4).boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 5).skip(4).boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 5).skip(2).boxed(), 2, 7);
+        assertCountSum(IntStream.range(1, 5).skip(0).boxed(), 4, 10);
 
-        assertCountSum(IntStreams.range(0, 0).parallel().skip(0).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(0, 0).parallel().skip(4).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 5).parallel().skip(4).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 5).parallel().skip(2).boxed(), 2, 7);
-        assertCountSum(IntStreams.range(1, 5).parallel().skip(0).boxed(), 4, 10);
+        assertCountSum(IntStream.range(0, 0).parallel().skip(0).boxed(), 0, 0);
+        assertCountSum(IntStream.range(0, 0).parallel().skip(4).boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 5).parallel().skip(4).boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 5).parallel().skip(2).boxed(), 2, 7);
+        assertCountSum(IntStream.range(1, 5).parallel().skip(0).boxed(), 4, 10);
 
         exerciseOps(EMPTY_INT_ARRAY, s -> s.skip(0), EMPTY_INT_ARRAY);
         exerciseOps(EMPTY_INT_ARRAY, s -> s.skip(10), EMPTY_INT_ARRAY);
 
-        exerciseOps(IntStreams.range(1, 2).toArray(), s -> s.skip(0), IntStreams.range(1, 2).toArray());
-        exerciseOps(IntStreams.range(1, 2).toArray(), s -> s.skip(1), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(0), IntStreams.range(1, 101).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(10), IntStreams.range(11, 101).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(100), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(200), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 2).toArray(), s -> s.skip(0), IntStream.range(1, 2).toArray());
+        exerciseOps(IntStream.range(1, 2).toArray(), s -> s.skip(1), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(0), IntStream.range(1, 101).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(10), IntStream.range(11, 101).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(100), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(200), EMPTY_INT_ARRAY);
     }
 
     public void testLimit() {
-        assertCountSum(IntStreams.range(0, 0).limit(4).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 3).limit(4).boxed(), 2, 3);
-        assertCountSum(IntStreams.range(1, 5).limit(4).boxed(), 4, 10);
-        assertCountSum(IntStreams.range(1, 9).limit(4).boxed(), 4, 10);
+        assertCountSum(IntStream.range(0, 0).limit(4).boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 3).limit(4).boxed(), 2, 3);
+        assertCountSum(IntStream.range(1, 5).limit(4).boxed(), 4, 10);
+        assertCountSum(IntStream.range(1, 9).limit(4).boxed(), 4, 10);
 
-        assertCountSum(IntStreams.range(0, 0).parallel().limit(4).boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 3).parallel().limit(4).boxed(), 2, 3);
-        assertCountSum(IntStreams.range(1, 5).parallel().limit(4).boxed(), 4, 10);
-        assertCountSum(IntStreams.range(1, 9).parallel().limit(4).boxed(), 4, 10);
+        assertCountSum(IntStream.range(0, 0).parallel().limit(4).boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 3).parallel().limit(4).boxed(), 2, 3);
+        assertCountSum(IntStream.range(1, 5).parallel().limit(4).boxed(), 4, 10);
+        assertCountSum(IntStream.range(1, 9).parallel().limit(4).boxed(), 4, 10);
 
         exerciseOps(EMPTY_INT_ARRAY, s -> s.limit(0), EMPTY_INT_ARRAY);
         exerciseOps(EMPTY_INT_ARRAY, s -> s.limit(10), EMPTY_INT_ARRAY);
 
-        exerciseOps(IntStreams.range(1, 2).toArray(), s -> s.limit(0), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 2).toArray(), s -> s.limit(1), IntStreams.range(1, 2).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.limit(0), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.limit(10), IntStreams.range(1, 11).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.limit(10).limit(10), IntStreams.range(1, 11).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.limit(100), IntStreams.range(1, 101).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.limit(100).limit(10), IntStreams.range(1, 11).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.limit(200), IntStreams.range(1, 101).toArray());
+        exerciseOps(IntStream.range(1, 2).toArray(), s -> s.limit(0), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 2).toArray(), s -> s.limit(1), IntStream.range(1, 2).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.limit(0), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.limit(10), IntStream.range(1, 11).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.limit(10).limit(10), IntStream.range(1, 11).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.limit(100), IntStream.range(1, 101).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.limit(100).limit(10), IntStream.range(1, 11).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.limit(200), IntStream.range(1, 101).toArray());
     }
 
     public void testSkipLimit() {
@@ -100,18 +99,18 @@ public class IntSliceOpTest extends OpTestCase {
         exerciseOps(EMPTY_INT_ARRAY, s -> s.skip(10).limit(0), EMPTY_INT_ARRAY);
         exerciseOps(EMPTY_INT_ARRAY, s -> s.skip(10).limit(10), EMPTY_INT_ARRAY);
 
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(0).limit(100), IntStreams.range(1, 101).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(0).limit(10), IntStreams.range(1, 11).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(0).limit(0), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(10).limit(100), IntStreams.range(11, 101).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(10).limit(10), IntStreams.range(11, 21).toArray());
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(10).limit(0), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(100).limit(100), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(100).limit(10), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(100).limit(0), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(200).limit(100), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(200).limit(10), EMPTY_INT_ARRAY);
-        exerciseOps(IntStreams.range(1, 101).toArray(), s -> s.skip(200).limit(0), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(0).limit(100), IntStream.range(1, 101).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(0).limit(10), IntStream.range(1, 11).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(0).limit(0), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(10).limit(100), IntStream.range(11, 101).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(10).limit(10), IntStream.range(11, 21).toArray());
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(10).limit(0), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(100).limit(100), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(100).limit(10), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(100).limit(0), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(200).limit(100), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(200).limit(10), EMPTY_INT_ARRAY);
+        exerciseOps(IntStream.range(1, 101).toArray(), s -> s.skip(200).limit(0), EMPTY_INT_ARRAY);
     }
 
     private int sliceSize(int dataSize, int skip, int limit) {
@@ -172,7 +171,7 @@ public class IntSliceOpTest extends OpTestCase {
     }
 
     public void testLimitSort() {
-        exerciseOps(IntStreams.range(1, 101).map(i -> 101 - i).toArray(), (IntStream s) -> s.limit(10).sorted());
+        exerciseOps(IntStream.range(1, 101).map(i -> 101 - i).toArray(), (IntStream s) -> s.limit(10).sorted());
     }
 
     @Test(groups = { "serialization-hostile" })
@@ -180,7 +179,7 @@ public class IntSliceOpTest extends OpTestCase {
         for (int l : Arrays.asList(0, 10)) {
             setContext("limit", l);
             AtomicInteger ai = new AtomicInteger();
-            IntStreams.range(1, 101)
+            IntStream.range(1, 101)
                     .peek(i -> ai.getAndIncrement())
                     .limit(l).toArray();
             // For the case of a zero limit, one element will get pushed through the sink chain
@@ -189,13 +188,13 @@ public class IntSliceOpTest extends OpTestCase {
     }
 
     public void testSkipParallel() {
-        int[] l = IntStreams.range(1, 1001).parallel().skip(200).limit(200).sequential().toArray();
+        int[] l = IntStream.range(1, 1001).parallel().skip(200).limit(200).sequential().toArray();
         assertEquals(l.length, 200);
         assertEquals(l[l.length - 1], 400);
     }
 
     public void testLimitParallel() {
-        int[] l = IntStreams.range(1, 1001).parallel().limit(500).sequential().toArray();
+        int[] l = IntStream.range(1, 1001).parallel().limit(500).sequential().toArray();
         assertEquals(l.length, 500);
         assertEquals(l[l.length - 1], 500);
     }

@@ -27,13 +27,13 @@ import java9.util.stream.BaseStream;
 
 import org.testng.annotations.Test;
 
-import java9.util.stream.RefStreams;
+import java9.util.stream.Stream;
 import java9.util.stream.OpTestCase;
 import java9.util.stream.StreamTestDataProvider;
 import java9.util.stream.TestData;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
-import java9.util.stream.DoubleStreams;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
+import java9.util.stream.DoubleStream;
 
 /**
  * @test
@@ -45,82 +45,82 @@ public class ConcatOpTest extends OpTestCase {
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class)
     public void testOps(String name, TestData.OfRef<Integer> data) {
         exerciseOpsInt(data,
-                       s -> java9.util.stream.RefStreams.concat(s, data.stream()),
-                       s -> java9.util.stream.IntStreams.concat(s, data.stream().mapToInt(Integer::intValue)),
-                       s -> java9.util.stream.LongStreams.concat(s, data.stream().mapToLong(Integer::longValue)),
-                       s -> java9.util.stream.DoubleStreams.concat(s, data.stream().mapToDouble(Integer::doubleValue)));
+                       s -> java9.util.stream.Stream.concat(s, data.stream()),
+                       s -> java9.util.stream.IntStream.concat(s, data.stream().mapToInt(Integer::intValue)),
+                       s -> java9.util.stream.LongStream.concat(s, data.stream().mapToLong(Integer::longValue)),
+                       s -> java9.util.stream.DoubleStream.concat(s, data.stream().mapToDouble(Integer::doubleValue)));
     }
 
     public void testSize() {
-        assertSized(RefStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE / 2).boxed(),
-                LongStreams.range(0, Long.MAX_VALUE / 2).boxed()));
+        assertSized(Stream.concat(
+                LongStream.range(0, Long.MAX_VALUE / 2).boxed(),
+                LongStream.range(0, Long.MAX_VALUE / 2).boxed()));
 
-        assertUnsized(RefStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE).boxed(),
-                LongStreams.range(0, Long.MAX_VALUE).boxed()));
+        assertUnsized(Stream.concat(
+                LongStream.range(0, Long.MAX_VALUE).boxed(),
+                LongStream.range(0, Long.MAX_VALUE).boxed()));
 
-        assertUnsized(RefStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE).boxed(),
-                RefStreams.iterate(0, i -> i + 1)));
+        assertUnsized(Stream.concat(
+                LongStream.range(0, Long.MAX_VALUE).boxed(),
+                Stream.iterate(0, i -> i + 1)));
 
-        assertUnsized(RefStreams.concat(
-                RefStreams.iterate(0, i -> i + 1),
-                LongStreams.range(0, Long.MAX_VALUE).boxed()));
+        assertUnsized(Stream.concat(
+                Stream.iterate(0, i -> i + 1),
+                LongStream.range(0, Long.MAX_VALUE).boxed()));
     }
 
     public void testLongSize() {
-        assertSized(LongStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE / 2),
-                LongStreams.range(0, Long.MAX_VALUE / 2)));
+        assertSized(LongStream.concat(
+                LongStream.range(0, Long.MAX_VALUE / 2),
+                LongStream.range(0, Long.MAX_VALUE / 2)));
 
-        assertUnsized(LongStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE),
-                LongStreams.range(0, Long.MAX_VALUE)));
+        assertUnsized(LongStream.concat(
+                LongStream.range(0, Long.MAX_VALUE),
+                LongStream.range(0, Long.MAX_VALUE)));
 
-        assertUnsized(LongStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE),
-                LongStreams.iterate(0, i -> i + 1)));
+        assertUnsized(LongStream.concat(
+                LongStream.range(0, Long.MAX_VALUE),
+                LongStream.iterate(0, i -> i + 1)));
 
-        assertUnsized(LongStreams.concat(
-                LongStreams.iterate(0, i -> i + 1),
-                LongStreams.range(0, Long.MAX_VALUE)));
+        assertUnsized(LongStream.concat(
+                LongStream.iterate(0, i -> i + 1),
+                LongStream.range(0, Long.MAX_VALUE)));
     }
 
     public void testIntSize() {
-        assertSized(IntStreams.concat(
-                IntStreams.range(0, Integer.MAX_VALUE),
-                IntStreams.range(0, Integer.MAX_VALUE)));
+        assertSized(IntStream.concat(
+                IntStream.range(0, Integer.MAX_VALUE),
+                IntStream.range(0, Integer.MAX_VALUE)));
 
-        assertUnsized(IntStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i),
-                LongStreams.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i)));
+        assertUnsized(IntStream.concat(
+                LongStream.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i),
+                LongStream.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i)));
 
-        assertUnsized(IntStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i),
-                IntStreams.iterate(0, i -> i + 1)));
+        assertUnsized(IntStream.concat(
+                LongStream.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i),
+                IntStream.iterate(0, i -> i + 1)));
 
-        assertUnsized(IntStreams.concat(
-                IntStreams.iterate(0, i -> i + 1),
-                LongStreams.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i)));
+        assertUnsized(IntStream.concat(
+                IntStream.iterate(0, i -> i + 1),
+                LongStream.range(0, Long.MAX_VALUE).mapToInt(i -> (int) i)));
     }
 
     public void testDoubleSize() {
-        assertSized(DoubleStreams.concat(
-                IntStreams.range(0, Integer.MAX_VALUE).mapToDouble(i -> i),
-                IntStreams.range(0, Integer.MAX_VALUE).mapToDouble(i -> i)));
+        assertSized(DoubleStream.concat(
+                IntStream.range(0, Integer.MAX_VALUE).mapToDouble(i -> i),
+                IntStream.range(0, Integer.MAX_VALUE).mapToDouble(i -> i)));
 
-        assertUnsized(DoubleStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE).mapToDouble(i -> i),
-                LongStreams.range(0, Long.MAX_VALUE).mapToDouble(i -> i)));
+        assertUnsized(DoubleStream.concat(
+                LongStream.range(0, Long.MAX_VALUE).mapToDouble(i -> i),
+                LongStream.range(0, Long.MAX_VALUE).mapToDouble(i -> i)));
 
-        assertUnsized(DoubleStreams.concat(
-                LongStreams.range(0, Long.MAX_VALUE).mapToDouble(i -> i),
-                DoubleStreams.iterate(0, i -> i + 1)));
+        assertUnsized(DoubleStream.concat(
+                LongStream.range(0, Long.MAX_VALUE).mapToDouble(i -> i),
+                DoubleStream.iterate(0, i -> i + 1)));
 
-        assertUnsized(DoubleStreams.concat(
-                DoubleStreams.iterate(0, i -> i + 1),
-                LongStreams.range(0, Long.MAX_VALUE).mapToDouble(i -> i)));
+        assertUnsized(DoubleStream.concat(
+                DoubleStream.iterate(0, i -> i + 1),
+                LongStream.range(0, Long.MAX_VALUE).mapToDouble(i -> i)));
     }
 
     void assertUnsized(BaseStream<?, ?> s) {

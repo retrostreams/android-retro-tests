@@ -66,8 +66,6 @@ import java9.util.stream.LongStreamTestDataProvider;
 import java9.util.stream.OpTestCase;
 import java9.util.stream.StreamTestDataProvider;
 import java9.util.stream.TestData;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
 
 import org.testng.annotations.Test;
 
@@ -191,17 +189,17 @@ public class MatchOpTest extends OpTestCase {
     }
 
     public void testIntStreamMatches() {
-        assertIntPredicates(() -> IntStreams.range(0, 0), Kind.ANY, INT_PREDICATES, false, false, false, false);
-        assertIntPredicates(() -> IntStreams.range(0, 0), Kind.ALL, INT_PREDICATES, true, true, true, true);
-        assertIntPredicates(() -> IntStreams.range(0, 0), Kind.NONE, INT_PREDICATES, true, true, true, true);
+        assertIntPredicates(() -> IntStream.range(0, 0), Kind.ANY, INT_PREDICATES, false, false, false, false);
+        assertIntPredicates(() -> IntStream.range(0, 0), Kind.ALL, INT_PREDICATES, true, true, true, true);
+        assertIntPredicates(() -> IntStream.range(0, 0), Kind.NONE, INT_PREDICATES, true, true, true, true);
 
-        assertIntPredicates(() -> IntStreams.range(1, 2), Kind.ANY, INT_PREDICATES, true, false, false, true);
-        assertIntPredicates(() -> IntStreams.range(1, 2), Kind.ALL, INT_PREDICATES, true, false, false, true);
-        assertIntPredicates(() -> IntStreams.range(1, 2), Kind.NONE, INT_PREDICATES, false, true, true, false);
+        assertIntPredicates(() -> IntStream.range(1, 2), Kind.ANY, INT_PREDICATES, true, false, false, true);
+        assertIntPredicates(() -> IntStream.range(1, 2), Kind.ALL, INT_PREDICATES, true, false, false, true);
+        assertIntPredicates(() -> IntStream.range(1, 2), Kind.NONE, INT_PREDICATES, false, true, true, false);
 
-        assertIntPredicates(() -> IntStreams.range(1, 6), Kind.ANY, INT_PREDICATES, true, false, true, true);
-        assertIntPredicates(() -> IntStreams.range(1, 6), Kind.ALL, INT_PREDICATES, true, false, false, false);
-        assertIntPredicates(() -> IntStreams.range(1, 6), Kind.NONE, INT_PREDICATES, false, true, false, false);
+        assertIntPredicates(() -> IntStream.range(1, 6), Kind.ANY, INT_PREDICATES, true, false, true, true);
+        assertIntPredicates(() -> IntStream.range(1, 6), Kind.ALL, INT_PREDICATES, true, false, false, false);
+        assertIntPredicates(() -> IntStream.range(1, 6), Kind.NONE, INT_PREDICATES, false, true, false, false);
     }
 
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)
@@ -276,17 +274,17 @@ public class MatchOpTest extends OpTestCase {
     }
 
     public void testLongStreamMatches() {
-        assertLongPredicates(() -> LongStreams.range(0, 0), Kind.ANY, LONG_PREDICATES, false, false, false, false);
-        assertLongPredicates(() -> LongStreams.range(0, 0), Kind.ALL, LONG_PREDICATES, true, true, true, true);
-        assertLongPredicates(() -> LongStreams.range(0, 0), Kind.NONE, LONG_PREDICATES, true, true, true, true);
+        assertLongPredicates(() -> LongStream.range(0, 0), Kind.ANY, LONG_PREDICATES, false, false, false, false);
+        assertLongPredicates(() -> LongStream.range(0, 0), Kind.ALL, LONG_PREDICATES, true, true, true, true);
+        assertLongPredicates(() -> LongStream.range(0, 0), Kind.NONE, LONG_PREDICATES, true, true, true, true);
 
-        assertLongPredicates(() -> LongStreams.range(1, 2), Kind.ANY, LONG_PREDICATES, true, false, false, true);
-        assertLongPredicates(() -> LongStreams.range(1, 2), Kind.ALL, LONG_PREDICATES, true, false, false, true);
-        assertLongPredicates(() -> LongStreams.range(1, 2), Kind.NONE, LONG_PREDICATES, false, true, true, false);
+        assertLongPredicates(() -> LongStream.range(1, 2), Kind.ANY, LONG_PREDICATES, true, false, false, true);
+        assertLongPredicates(() -> LongStream.range(1, 2), Kind.ALL, LONG_PREDICATES, true, false, false, true);
+        assertLongPredicates(() -> LongStream.range(1, 2), Kind.NONE, LONG_PREDICATES, false, true, true, false);
 
-        assertLongPredicates(() -> LongStreams.range(1, 6), Kind.ANY, LONG_PREDICATES, true, false, true, true);
-        assertLongPredicates(() -> LongStreams.range(1, 6), Kind.ALL, LONG_PREDICATES, true, false, false, false);
-        assertLongPredicates(() -> LongStreams.range(1, 6), Kind.NONE, LONG_PREDICATES, false, true, false, false);
+        assertLongPredicates(() -> LongStream.range(1, 6), Kind.ANY, LONG_PREDICATES, true, false, true, true);
+        assertLongPredicates(() -> LongStream.range(1, 6), Kind.ALL, LONG_PREDICATES, true, false, false, false);
+        assertLongPredicates(() -> LongStream.range(1, 6), Kind.NONE, LONG_PREDICATES, false, true, false, false);
     }
 
     @Test(dataProvider = "LongStreamTestData", dataProviderClass = LongStreamTestDataProvider.class)
@@ -361,17 +359,17 @@ public class MatchOpTest extends OpTestCase {
     }
 
     public void testDoubleStreamMatches() {
-        assertDoublePredicates(() -> LongStreams.range(0, 0).asDoubleStream(), Kind.ANY, DOUBLE_PREDICATES, false, false, false, false);
-        assertDoublePredicates(() -> LongStreams.range(0, 0).asDoubleStream(), Kind.ALL, DOUBLE_PREDICATES, true, true, true, true);
-        assertDoublePredicates(() -> LongStreams.range(0, 0).asDoubleStream(), Kind.NONE, DOUBLE_PREDICATES, true, true, true, true);
+        assertDoublePredicates(() -> LongStream.range(0, 0).asDoubleStream(), Kind.ANY, DOUBLE_PREDICATES, false, false, false, false);
+        assertDoublePredicates(() -> LongStream.range(0, 0).asDoubleStream(), Kind.ALL, DOUBLE_PREDICATES, true, true, true, true);
+        assertDoublePredicates(() -> LongStream.range(0, 0).asDoubleStream(), Kind.NONE, DOUBLE_PREDICATES, true, true, true, true);
 
-        assertDoublePredicates(() -> LongStreams.range(1, 2).asDoubleStream(), Kind.ANY, DOUBLE_PREDICATES, true, false, false, true);
-        assertDoublePredicates(() -> LongStreams.range(1, 2).asDoubleStream(), Kind.ALL, DOUBLE_PREDICATES, true, false, false, true);
-        assertDoublePredicates(() -> LongStreams.range(1, 2).asDoubleStream(), Kind.NONE, DOUBLE_PREDICATES, false, true, true, false);
+        assertDoublePredicates(() -> LongStream.range(1, 2).asDoubleStream(), Kind.ANY, DOUBLE_PREDICATES, true, false, false, true);
+        assertDoublePredicates(() -> LongStream.range(1, 2).asDoubleStream(), Kind.ALL, DOUBLE_PREDICATES, true, false, false, true);
+        assertDoublePredicates(() -> LongStream.range(1, 2).asDoubleStream(), Kind.NONE, DOUBLE_PREDICATES, false, true, true, false);
 
-        assertDoublePredicates(() -> LongStreams.range(1, 6).asDoubleStream(), Kind.ANY, DOUBLE_PREDICATES, true, false, true, true);
-        assertDoublePredicates(() -> LongStreams.range(1, 6).asDoubleStream(), Kind.ALL, DOUBLE_PREDICATES, true, false, false, false);
-        assertDoublePredicates(() -> LongStreams.range(1, 6).asDoubleStream(), Kind.NONE, DOUBLE_PREDICATES, false, true, false, false);
+        assertDoublePredicates(() -> LongStream.range(1, 6).asDoubleStream(), Kind.ANY, DOUBLE_PREDICATES, true, false, true, true);
+        assertDoublePredicates(() -> LongStream.range(1, 6).asDoubleStream(), Kind.ALL, DOUBLE_PREDICATES, true, false, false, false);
+        assertDoublePredicates(() -> LongStream.range(1, 6).asDoubleStream(), Kind.NONE, DOUBLE_PREDICATES, false, true, false, false);
     }
 
     @Test(dataProvider = "DoubleStreamTestData", dataProviderClass = DoubleStreamTestDataProvider.class)

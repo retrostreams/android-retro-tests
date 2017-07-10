@@ -38,12 +38,8 @@ import java9.lang.Iterables;
 import java9.util.function.Function;
 import java9.util.function.Predicate;
 import java9.util.stream.DoubleStream;
-import java9.util.stream.DoubleStreams;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.DefaultMethodStreams;
 import java9.util.stream.LambdaTestHelpers;
@@ -330,7 +326,7 @@ public class WhileOpTest extends OpTestCase {
     @Test(groups = { "serialization-hostile" })
     public void testRefDefaultClose() {
         AtomicBoolean isClosed = new AtomicBoolean();
-        Stream<Integer> s = RefStreams.of(1, 2, 3).onClose(() -> isClosed.set(true));
+        Stream<Integer> s = Stream.of(1, 2, 3).onClose(() -> isClosed.set(true));
         Stream<Integer> ds = null;
         try {
             ds = DefaultMethodStreams.delegateTo(s).takeWhile(e -> e < 3);
@@ -346,7 +342,7 @@ public class WhileOpTest extends OpTestCase {
     @Test(groups = { "serialization-hostile" })
     public void testIntDefaultClose() {
         AtomicBoolean isClosed = new AtomicBoolean();
-        IntStream s = IntStreams.of(1, 2, 3).onClose(() -> isClosed.set(true));
+        IntStream s = IntStream.of(1, 2, 3).onClose(() -> isClosed.set(true));
         IntStream ds = null;
         try {
             ds = DefaultMethodStreams.delegateTo(s).takeWhile(e -> e < 3);
@@ -362,7 +358,7 @@ public class WhileOpTest extends OpTestCase {
     @Test(groups = { "serialization-hostile" })
     public void testLongDefaultClose() {
         AtomicBoolean isClosed = new AtomicBoolean();
-        LongStream s = LongStreams.of(1, 2, 3).onClose(() -> isClosed.set(true));
+        LongStream s = LongStream.of(1, 2, 3).onClose(() -> isClosed.set(true));
         LongStream ds = null;
         try {
             ds = DefaultMethodStreams.delegateTo(s).takeWhile(e -> e < 3);
@@ -378,7 +374,7 @@ public class WhileOpTest extends OpTestCase {
     @Test(groups = { "serialization-hostile" })
     public void testDoubleDefaultClose() {
         AtomicBoolean isClosed = new AtomicBoolean();
-        DoubleStream s = DoubleStreams.of(1, 2, 3).onClose(() -> isClosed.set(true));
+        DoubleStream s = DoubleStream.of(1, 2, 3).onClose(() -> isClosed.set(true));
         DoubleStream ds = null;
         try {
             ds = DefaultMethodStreams.delegateTo(s).takeWhile(e -> e < 3);

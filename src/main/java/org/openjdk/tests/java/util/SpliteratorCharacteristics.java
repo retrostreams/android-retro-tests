@@ -47,9 +47,9 @@ import java9.util.PrimitiveIterator;
 import java9.util.Spliterator;
 import java9.util.Spliterators;
 import java9.util.function.Supplier;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
+import java9.util.stream.DoubleStream;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
 
 import static org.testng.Assert.*;
 
@@ -96,7 +96,7 @@ public class SpliteratorCharacteristics {
     }
 
     public void testSpliteratorOfIntFromIterator() {
-        Supplier<PrimitiveIterator.OfInt> si = () -> IntStreams.of(1, 2, 3, 4).iterator();
+        Supplier<PrimitiveIterator.OfInt> si = () -> IntStream.of(1, 2, 3, 4).iterator();
 
         {
             Spliterator<?> s = Spliterators.spliterator(si.get(), 1, 0);
@@ -123,7 +123,7 @@ public class SpliteratorCharacteristics {
     }
 
     public void testSpliteratorOfLongFromIterator() {
-        Supplier<PrimitiveIterator.OfLong> si = () -> LongStreams.of(1, 2, 3, 4).iterator();
+        Supplier<PrimitiveIterator.OfLong> si = () -> LongStream.of(1, 2, 3, 4).iterator();
 
         {
             Spliterator<?> s = Spliterators.spliterator(si.get(), 1, 0);
@@ -150,7 +150,7 @@ public class SpliteratorCharacteristics {
     }
 
     public void testSpliteratorOfDoubleFromIterator() {
-        Supplier<PrimitiveIterator.OfDouble> si = () -> DoubleStreams.of(1, 2, 3, 4).iterator();
+        Supplier<PrimitiveIterator.OfDouble> si = () -> DoubleStream.of(1, 2, 3, 4).iterator();
 
         {
             Spliterator<?> s = Spliterators.spliterator(si.get(), 1, 0);

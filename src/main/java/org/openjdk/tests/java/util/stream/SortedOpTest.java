@@ -46,7 +46,6 @@ import java9.util.stream.BaseStream;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.*;
@@ -98,7 +97,7 @@ public class SortedOpTest extends OpTestCase {
     <T, S extends BaseStream<T, S>> void testStreamTooLarge(Function<LongStream, S> s,
                                                             Function<S, ?> terminal) {
         // Set up conditions for a large input > maximum array size
-        Supplier<LongStream> input = () -> LongStreams.range(0, 1L + Integer.MAX_VALUE);
+        Supplier<LongStream> input = () -> LongStream.range(0, 1L + Integer.MAX_VALUE);
 
         // Transformation functions
         List<Function<LongStream, LongStream>> transforms = Arrays.asList(

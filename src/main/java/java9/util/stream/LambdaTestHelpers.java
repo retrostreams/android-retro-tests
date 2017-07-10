@@ -60,7 +60,6 @@ import java9.util.function.ToIntFunction;
 import java9.util.function.ToLongFunction;
 import java9.util.stream.BaseStream;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamOpFlag;
 import java9.util.stream.StreamSupport;
@@ -145,7 +144,7 @@ public class LambdaTestHelpers {
     };
 
     public static final Function<String, IntStream> flattenInt
-            = string -> IntStreams.range(0, string.length()).map(string::charAt);
+            = string -> IntStream.range(0, string.length()).map(string::charAt);
 
     public static <T, R> Function<T, R> forPredicate(Predicate<? super T> predicate, R forTrue, R forFalse) {
         java9.util.Objects.requireNonNull(predicate);

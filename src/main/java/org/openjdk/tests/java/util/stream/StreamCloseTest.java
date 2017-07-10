@@ -28,7 +28,6 @@ import static java9.util.stream.ThrowableHelper.checkNPE;
 
 import java.util.Arrays;
 
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 
 import org.testng.annotations.Test;
@@ -44,7 +43,7 @@ import java9.util.stream.OpTestCase;
 @Test(groups = { "serialization-hostile" })
 public class StreamCloseTest extends OpTestCase {
     public void testNullCloseHandler() {
-        checkNPE(() -> RefStreams.of(1).onClose(null));
+        checkNPE(() -> Stream.of(1).onClose(null));
     }
 
     public void testEmptyCloseHandler() {

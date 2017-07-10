@@ -42,9 +42,7 @@ import java9.util.concurrent.ThreadLocalRandom;
 import java9.util.stream.Collectors;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.*;
@@ -71,7 +69,7 @@ public class DistinctOpTest extends OpTestCase {
         // (a non-deterministic process) the only assertion that can be made is
         // that an element should be found
 
-        Optional<Integer> oi = RefStreams.iterate(1, i -> i + 1).unordered().parallel().distinct().findAny();
+        Optional<Integer> oi = Stream.iterate(1, i -> i + 1).unordered().parallel().distinct().findAny();
         assertTrue(oi.isPresent());
 
         oi = ThreadLocalRandom.current().ints().boxed().parallel().distinct().findAny();
@@ -182,7 +180,7 @@ public class DistinctOpTest extends OpTestCase {
     @Test(groups = { "serialization-hostile" })
     public void testStable() {
         // Create N instances of Integer all with the same value
-        List<Integer> input = IntStreams.rangeClosed(0, 1000)
+        List<Integer> input = IntStream.rangeClosed(0, 1000)
                 .mapToObj(i -> new Integer(1000)) // explicit construction
                 .collect(Collectors.toList());
         Integer expectedElement = input.get(0);

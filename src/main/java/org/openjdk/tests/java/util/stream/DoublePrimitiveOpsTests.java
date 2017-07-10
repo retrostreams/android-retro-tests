@@ -32,8 +32,8 @@ import java9.util.J8Arrays;
 import java.util.Random;
 
 import java9.util.Spliterator;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.LongStreams;
+import java9.util.stream.DoubleStream;
+import java9.util.stream.LongStream;
 import java9.util.stream.StreamSupport;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -54,20 +54,20 @@ public class DoublePrimitiveOpsTests {
     }
 
     public void testFlags() {
-        assertTrue(LongStreams.range(1, 10).asDoubleStream().boxed().spliterator()
+        assertTrue(LongStream.range(1, 10).asDoubleStream().boxed().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
-        assertFalse(DoubleStreams.of(1, 10).boxed().spliterator()
+        assertFalse(DoubleStream.of(1, 10).boxed().spliterator()
                       .hasCharacteristics(Spliterator.SORTED));
     }
 
     public void testToArray() {
         {
-            double[] array =  LongStreams.range(1, 10).asDoubleStream().map(i -> i * 2).toArray();
+            double[] array =  LongStream.range(1, 10).asDoubleStream().map(i -> i * 2).toArray();
             assertEquals(array, new double[]{2, 4, 6, 8, 10, 12, 14, 16, 18});
         }
 
         {
-            double[] array =  LongStreams.range(1, 10).parallel().asDoubleStream().map(i -> i * 2).toArray();
+            double[] array =  LongStream.range(1, 10).parallel().asDoubleStream().map(i -> i * 2).toArray();
             assertEquals(array, new double[]{2, 4, 6, 8, 10, 12, 14, 16, 18});
         }
     }
@@ -75,7 +75,7 @@ public class DoublePrimitiveOpsTests {
     public void testSort() {
         Random r = new Random();
 
-        double[] content = DoubleStreams.generate(() -> r.nextDouble()).limit(10).toArray();
+        double[] content = DoubleStream.generate(() -> r.nextDouble()).limit(10).toArray();
         double[] sortedContent = content.clone();
         Arrays.sort(sortedContent);
 
@@ -92,10 +92,10 @@ public class DoublePrimitiveOpsTests {
 
     public void testSortDistinct() {
         {
-            double[] range = LongStreams.range(0, 10).asDoubleStream().toArray();
+            double[] range = LongStream.range(0, 10).asDoubleStream().toArray();
 
-            assertEquals(LongStreams.range(0, 10).asDoubleStream().sorted().distinct().toArray(), range);
-            assertEquals(LongStreams.range(0, 10).asDoubleStream().parallel().sorted().distinct().toArray(), range);
+            assertEquals(LongStream.range(0, 10).asDoubleStream().sorted().distinct().toArray(), range);
+            assertEquals(LongStream.range(0, 10).asDoubleStream().parallel().sorted().distinct().toArray(), range);
         }
 
         {
@@ -103,15 +103,15 @@ public class DoublePrimitiveOpsTests {
                              Double.NEGATIVE_INFINITY, 2, 9, 1, 0, 8, Double.NaN, -0.0};
             double[] expected = {Double.NEGATIVE_INFINITY, -0.0, 0, 1, 2, 3, 5, 8, 9,
                                  Double.POSITIVE_INFINITY, Double.NaN};
-            assertEquals(DoubleStreams.of(data).sorted().distinct().toArray(), expected);
-            assertEquals(DoubleStreams.of(data).parallel().sorted().distinct().toArray(), expected);
+            assertEquals(DoubleStream.of(data).sorted().distinct().toArray(), expected);
+            assertEquals(DoubleStream.of(data).parallel().sorted().distinct().toArray(), expected);
         }
     }
 
     public void testSortSort() {
         Random r = new Random();
 
-        double[] content = DoubleStreams.generate(() -> r.nextDouble()).limit(10).toArray();
+        double[] content = DoubleStream.generate(() -> r.nextDouble()).limit(10).toArray();
         double[] sortedContent = content.clone();
         Arrays.sort(sortedContent);
 
@@ -130,12 +130,12 @@ public class DoublePrimitiveOpsTests {
         double[] expected = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         {
-            double[] actual = DoubleStreams.iterate(1.0, i -> i + 1.0).limit(9).toArray();
+            double[] actual = DoubleStream.iterate(1.0, i -> i + 1.0).limit(9).toArray();
             Assert.assertTrue(Arrays.equals(expected, actual));
         }
 
         {
-            double[] actual = LongStreams.range(1, 100).parallel().asDoubleStream().limit(9).toArray();
+            double[] actual = LongStream.range(1, 100).parallel().asDoubleStream().limit(9).toArray();
             Assert.assertTrue(Arrays.equals(expected, actual));
         }
     }

@@ -30,7 +30,6 @@ import java.util.Collection;
 import org.testng.annotations.Test;
 
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.*;
 
 /**
@@ -40,11 +39,11 @@ import java9.util.stream.*;
 public class IntUniqOpTest extends OpTestCase {
 
     public void testUniqOp() {
-        assertCountSum(IntStreams.generate(() -> 0).limit(10).distinct().boxed(), 1, 0);
-        assertCountSum(IntStreams.generate(() -> 1).limit(10).distinct().boxed(), 1, 1);
-        assertCountSum(IntStreams.range(0, 0).distinct().boxed(), 0, 0);
-        assertCountSum(IntStreams.range(1, 11).distinct().boxed(), 10, 55);
-        assertCountSum(IntStreams.range(1, 11).distinct().boxed(), 10, 55);
+        assertCountSum(IntStream.generate(() -> 0).limit(10).distinct().boxed(), 1, 0);
+        assertCountSum(IntStream.generate(() -> 1).limit(10).distinct().boxed(), 1, 1);
+        assertCountSum(IntStream.range(0, 0).distinct().boxed(), 0, 0);
+        assertCountSum(IntStream.range(1, 11).distinct().boxed(), 10, 55);
+        assertCountSum(IntStream.range(1, 11).distinct().boxed(), 10, 55);
     }
 
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)

@@ -31,7 +31,6 @@ import java9.util.J8Arrays;
 import java9.util.Spliterators;
 import java9.util.function.Supplier;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
 import java9.util.stream.SpinedBuffer;
 
 /** TestNG DataProvider for long-valued streams */
@@ -109,9 +108,9 @@ public class LongStreamTestDataProvider {
                         TestData.Factory.ofSpinedBuffer("SpinedList:" + name, isl)});
 
                 list.add(streamDataDescr("LongStream.longRange(0,l): " + longs.length,
-                                         () -> LongStreams.range(0, longs.length)));
+                                         () -> LongStream.range(0, longs.length)));
                 list.add(streamDataDescr("LongStream.longRangeClosed(0,l): " + longs.length,
-                                         () -> LongStreams.rangeClosed(0, longs.length)));
+                                         () -> LongStream.rangeClosed(0, longs.length)));
             }
             testSmallData = listSmall.toArray(new Object[0][]);
             list1000.addAll(listSmall);
@@ -142,13 +141,13 @@ public class LongStreamTestDataProvider {
                 spliterators.add(splitDescr("Primitives.s(SpinedBuffer.iterator()):" + name,
                                             () -> Spliterators.spliteratorUnknownSize(isl.iterator(), 0)));
 
-                spliterators.add(splitDescr("LongStreams.longRange(0, l):" + name,
-                                            () -> LongStreams.range(0, longs.length).spliterator()));
-                spliterators.add(splitDescr("LongStreams.longRangeClosed(0, l):" + name,
-                                            () -> LongStreams.rangeClosed(0, longs.length).spliterator()));
-                spliterators.add(splitDescr("LongStreams.iterate(0, x -> x<l, x -> x+1):" + name,
-                                            () -> LongStreams.iterate(0L, x -> x < longs.length, x -> x + 1L)
-                                                             .spliterator()));
+                spliterators.add(splitDescr("LongStream.longRange(0, l):" + name,
+                                            () -> LongStream.range(0, longs.length).spliterator()));
+                spliterators.add(splitDescr("LongStream.longRangeClosed(0, l):" + name,
+                                            () -> LongStream.rangeClosed(0, longs.length).spliterator()));
+                spliterators.add(splitDescr("LongStream.iterate(0, x -> x<l, x -> x+1):" + name,
+                                            () -> LongStream.iterate(0L, x -> x < longs.length, x -> x + 1L)
+                                                            .spliterator()));
                 // Need more!
             }
             spliteratorTestData = spliterators.toArray(new Object[0][]);

@@ -25,9 +25,8 @@ package org.openjdk.tests.java.util.stream;
 import java9.util.OptionalDouble;
 import java9.util.OptionalInt;
 import java9.util.OptionalLong;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.*;
 
@@ -56,10 +55,10 @@ public class MinMaxTest extends OpTestCase {
     }
 
     public void testIntMinMax() {
-        assertEquals(IntStreams.empty().min(), OptionalInt.empty());
-        assertEquals(IntStreams.empty().max(), OptionalInt.empty());
-        assertEquals(1, IntStreams.range(1, 1001).min().getAsInt());
-        assertEquals(1000, IntStreams.range(1, 1001).max().getAsInt());
+        assertEquals(IntStream.empty().min(), OptionalInt.empty());
+        assertEquals(IntStream.empty().max(), OptionalInt.empty());
+        assertEquals(1, IntStream.range(1, 1001).min().getAsInt());
+        assertEquals(1000, IntStream.range(1, 1001).max().getAsInt());
     }
 
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)
@@ -69,10 +68,10 @@ public class MinMaxTest extends OpTestCase {
     }
 
     public void testLongMinMax() {
-        assertEquals(LongStreams.empty().min(), OptionalLong.empty());
-        assertEquals(LongStreams.empty().max(), OptionalLong.empty());
-        assertEquals(1, LongStreams.range(1, 1001).min().getAsLong());
-        assertEquals(1000, LongStreams.range(1, 1001).max().getAsLong());
+        assertEquals(LongStream.empty().min(), OptionalLong.empty());
+        assertEquals(LongStream.empty().max(), OptionalLong.empty());
+        assertEquals(1, LongStream.range(1, 1001).min().getAsLong());
+        assertEquals(1000, LongStream.range(1, 1001).max().getAsLong());
     }
 
     @Test(dataProvider = "LongStreamTestData", dataProviderClass = LongStreamTestDataProvider.class)
@@ -82,10 +81,10 @@ public class MinMaxTest extends OpTestCase {
     }
 
     public void testDoubleMinMax() {
-        assertEquals(DoubleStreams.empty().min(), OptionalDouble.empty());
-        assertEquals(DoubleStreams.empty().max(), OptionalDouble.empty());
-        assertEquals(1.0, LongStreams.range(1, 1001).asDoubleStream().min().getAsDouble());
-        assertEquals(1000.0, LongStreams.range(1, 1001).asDoubleStream().max().getAsDouble());
+        assertEquals(DoubleStream.empty().min(), OptionalDouble.empty());
+        assertEquals(DoubleStream.empty().max(), OptionalDouble.empty());
+        assertEquals(1.0, LongStream.range(1, 1001).asDoubleStream().min().getAsDouble());
+        assertEquals(1000.0, LongStream.range(1, 1001).asDoubleStream().max().getAsDouble());
     }
 
     @Test(dataProvider = "DoubleStreamTestData", dataProviderClass = DoubleStreamTestDataProvider.class)

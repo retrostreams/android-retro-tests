@@ -33,9 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java9.util.function.Function;
 import java9.util.stream.DoubleStream;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.*;
 
@@ -126,7 +124,7 @@ public class ForEachOpTest extends OpTestCase {
     public void testIntForEachOrdered() {
         List<Integer> input = countTo(10000);
         TestData.OfInt data = TestData.Factory.ofIntSupplier("[1, 10000]",
-                                                             () -> IntStreams.range(1, 10001));
+                                                             () -> IntStream.range(1, 10001));
 
         Function<IntStream, List<Integer>> terminalFunc = s -> {
             List<Integer> l = new ArrayList<>();
@@ -174,7 +172,7 @@ public class ForEachOpTest extends OpTestCase {
     public void testLongForEachOrdered() {
         List<Integer> input = countTo(10000);
         TestData.OfLong data = TestData.Factory.ofLongSupplier("[1, 10000]",
-                                                               () -> LongStreams.range(1, 10001));
+                                                               () -> LongStream.range(1, 10001));
 
         Function<LongStream, List<Integer>> terminalFunc = s -> {
             List<Integer> l = new ArrayList<>();
@@ -222,7 +220,7 @@ public class ForEachOpTest extends OpTestCase {
     public void testDoubleForEachOrdered() {
         List<Integer> input = countTo(10000);
         TestData.OfDouble data = TestData.Factory.ofDoubleSupplier("[1, 10000]",
-                                                                   () -> IntStreams.range(1, 10001).asDoubleStream());
+                                                                   () -> IntStream.range(1, 10001).asDoubleStream());
 
         Function<DoubleStream, List<Integer>> terminalFunc = s -> {
             List<Integer> l = new ArrayList<>();

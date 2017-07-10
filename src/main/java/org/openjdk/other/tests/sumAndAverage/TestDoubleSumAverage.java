@@ -34,7 +34,6 @@ import java9.util.function.Supplier;
 import java9.util.function.ToDoubleFunction;
 import java9.util.stream.Collectors;
 import java9.util.stream.DoubleStream;
-import java9.util.stream.DoubleStreams;
 
 import static java.lang.Double.*;
 
@@ -69,7 +68,7 @@ public class TestDoubleSumAverage {
         Supplier<DoubleStream> ds = new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.iterate(0.0, new DoubleUnaryOperator() {
+                return DoubleStream.iterate(0.0, new DoubleUnaryOperator() {
                     @Override
                     public double applyAsDouble(double e) {
                         return 0.0;
@@ -104,7 +103,7 @@ public class TestDoubleSumAverage {
         Supplier<DoubleStream> ds = new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.iterate(base, new DoubleUnaryOperator() {
+                return DoubleStream.iterate(base, new DoubleUnaryOperator() {
                     @Override
                     public double applyAsDouble(double e) {
                         return increment;
@@ -165,112 +164,112 @@ public class TestDoubleSumAverage {
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(MAX_VALUE, MAX_VALUE);
+                return DoubleStream.of(MAX_VALUE, MAX_VALUE);
             }
         },   POSITIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(-MAX_VALUE, -MAX_VALUE);
+                return DoubleStream.of(-MAX_VALUE, -MAX_VALUE);
             }
         }, NEGATIVE_INFINITY);
 
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(1.0d, POSITIVE_INFINITY, 1.0d);
+                return DoubleStream.of(1.0d, POSITIVE_INFINITY, 1.0d);
             }
         }, POSITIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(POSITIVE_INFINITY);
+                return DoubleStream.of(POSITIVE_INFINITY);
             }
         },             POSITIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(POSITIVE_INFINITY, POSITIVE_INFINITY);
+                return DoubleStream.of(POSITIVE_INFINITY, POSITIVE_INFINITY);
             }
         }, POSITIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(POSITIVE_INFINITY, POSITIVE_INFINITY, 0.0);
+                return DoubleStream.of(POSITIVE_INFINITY, POSITIVE_INFINITY, 0.0);
             }
         }, POSITIVE_INFINITY);
 
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(1.0d, NEGATIVE_INFINITY, 1.0d);
+                return DoubleStream.of(1.0d, NEGATIVE_INFINITY, 1.0d);
             }
         }, NEGATIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NEGATIVE_INFINITY);
+                return DoubleStream.of(NEGATIVE_INFINITY);
             }
         },             NEGATIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NEGATIVE_INFINITY, NEGATIVE_INFINITY);
+                return DoubleStream.of(NEGATIVE_INFINITY, NEGATIVE_INFINITY);
             }
         }, NEGATIVE_INFINITY);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NEGATIVE_INFINITY, NEGATIVE_INFINITY, 0.0);
+                return DoubleStream.of(NEGATIVE_INFINITY, NEGATIVE_INFINITY, 0.0);
             }
         }, NEGATIVE_INFINITY);
 
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(1.0d, NaN, 1.0d);
+                return DoubleStream.of(1.0d, NaN, 1.0d);
             }
         },               NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NaN);
+                return DoubleStream.of(NaN);
             }
         },                           NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(1.0d, NEGATIVE_INFINITY, POSITIVE_INFINITY, 1.0d);
+                return DoubleStream.of(1.0d, NEGATIVE_INFINITY, POSITIVE_INFINITY, 1.0d);
             }
         }, NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(1.0d, POSITIVE_INFINITY, NEGATIVE_INFINITY, 1.0d);
+                return DoubleStream.of(1.0d, POSITIVE_INFINITY, NEGATIVE_INFINITY, 1.0d);
             }
         }, NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(POSITIVE_INFINITY, NaN);
+                return DoubleStream.of(POSITIVE_INFINITY, NaN);
             }
         }, NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NEGATIVE_INFINITY, NaN);
+                return DoubleStream.of(NEGATIVE_INFINITY, NaN);
             }
         }, NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NaN, POSITIVE_INFINITY);
+                return DoubleStream.of(NaN, POSITIVE_INFINITY);
             }
         }, NaN);
         testCases.put(new Supplier<DoubleStream>() {
             @Override
             public DoubleStream get() {
-                return DoubleStreams.of(NaN, NEGATIVE_INFINITY);
+                return DoubleStream.of(NaN, NEGATIVE_INFINITY);
             }
         }, NaN);
 

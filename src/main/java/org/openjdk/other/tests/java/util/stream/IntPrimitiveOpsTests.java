@@ -28,7 +28,7 @@ import java9.util.function.IntUnaryOperator;
 import java9.util.function.BinaryOperator;
 import java9.util.function.ToIntFunction;
 import java9.util.stream.Collectors;
-import java9.util.stream.IntStreams;
+import java9.util.stream.IntStream;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.function.IntConsumer;
@@ -47,7 +47,7 @@ import static org.testng.Assert.assertEquals;
 public class IntPrimitiveOpsTests {
 
     public void testSum() {
-        long sum = IntStreams.range(1, 10).filter(new IntPredicate() {
+        long sum = IntStream.range(1, 10).filter(new IntPredicate() {
             @Override
             public boolean test(int i) {
                 return i % 2 == 0;
@@ -57,7 +57,7 @@ public class IntPrimitiveOpsTests {
     }
 
     public void testMap() {
-        long sum = IntStreams.range(1, 10).filter(new IntPredicate() {
+        long sum = IntStream.range(1, 10).filter(new IntPredicate() {
             @Override
             public boolean test(int i) {
                 return i % 2 == 0;
@@ -72,7 +72,7 @@ public class IntPrimitiveOpsTests {
     }
 
     public void testParSum() {
-        long sum = IntStreams.range(1, 10).parallel().filter(new IntPredicate() {
+        long sum = IntStream.range(1, 10).parallel().filter(new IntPredicate() {
             @Override
             public boolean test(int i) {
                 return i % 2 == 0;
@@ -85,7 +85,7 @@ public class IntPrimitiveOpsTests {
     public void testTee() {
         final int[] teeSum = new int[1];
         long sum;
-        sum = IntStreams.range(1, 10).filter(new IntPredicate() {
+        sum = IntStream.range(1, 10).filter(new IntPredicate() {
             @Override
             public boolean test(int i) {
                 return i % 2 == 0;
@@ -102,7 +102,7 @@ public class IntPrimitiveOpsTests {
     @Test(groups = { "serialization-hostile" })
     public void testForEach() {
         final int[] sum = new int[1];
-        IntStreams.range(1, 10).filter(new IntPredicate() {
+        IntStream.range(1, 10).filter(new IntPredicate() {
             @Override
             public boolean test(int i) {
                 return i % 2 == 0;
@@ -119,7 +119,7 @@ public class IntPrimitiveOpsTests {
     @Test(groups = { "serialization-hostile" })
     public void testParForEach() {
         final AtomicInteger ai = new AtomicInteger(0);
-        IntStreams.range(1, 10).parallel().filter(new IntPredicate() {
+        IntStream.range(1, 10).parallel().filter(new IntPredicate() {
             @Override
             public boolean test(int i) {
                 return i % 2 == 0;
@@ -134,7 +134,7 @@ public class IntPrimitiveOpsTests {
     }
 
     public void testBox() {
-        List<Integer> l = IntStreams.range(1, 10).parallel().boxed().collect(Collectors.<Integer>toList());
+        List<Integer> l = IntStream.range(1, 10).parallel().boxed().collect(Collectors.<Integer>toList());
         Stream<Integer> stream = StreamSupport.stream(l);
         int sum = stream.reduce(0, new BinaryOperator<Integer>() {
             @Override
@@ -159,7 +159,7 @@ public class IntPrimitiveOpsTests {
 
     public void testToArray() {
         {
-            int[] array = IntStreams.range(1, 10).map(new IntUnaryOperator() {
+            int[] array = IntStream.range(1, 10).map(new IntUnaryOperator() {
                 @Override
                 public int applyAsInt(int i) {
                     return i * 2;
@@ -169,7 +169,7 @@ public class IntPrimitiveOpsTests {
         }
 
         {
-            int[] array =  IntStreams.range(1, 10).parallel().map(new IntUnaryOperator() {
+            int[] array =  IntStream.range(1, 10).parallel().map(new IntUnaryOperator() {
                 @Override
                 public int applyAsInt(int i) {
                     return i * 2;
@@ -182,7 +182,7 @@ public class IntPrimitiveOpsTests {
     public void testSort() {
         final Random r = new Random();
 
-        int[] content = IntStreams.generate(new IntSupplier() {
+        int[] content = IntStream.generate(new IntSupplier() {
             @Override
             public int getAsInt() {
                 return r.nextInt(100);
@@ -205,7 +205,7 @@ public class IntPrimitiveOpsTests {
     public void testSortSort() {
         final Random r = new Random();
 
-        int[] content = IntStreams.generate(new IntSupplier() {
+        int[] content = IntStream.generate(new IntSupplier() {
             @Override
             public int getAsInt() {
                 return r.nextInt(100);
@@ -227,7 +227,7 @@ public class IntPrimitiveOpsTests {
 
     public void testSequential() {
 
-        int[] expected = IntStreams.range(1, 1000).toArray();
+        int[] expected = IntStream.range(1, 1000).toArray();
 
         class AssertingConsumer implements IntConsumer {
             private final int[] array;
@@ -247,23 +247,23 @@ public class IntPrimitiveOpsTests {
 
         {
             AssertingConsumer consumer = new AssertingConsumer(expected);
-            IntStreams.range(1, 1000).sequential().forEach(consumer);
+            IntStream.range(1, 1000).sequential().forEach(consumer);
             assertEquals(expected.length, consumer.getCount());
         }
 
         {
             AssertingConsumer consumer = new AssertingConsumer(expected);
-            IntStreams.range(1, 1000).parallel().sequential().forEach(consumer);
+            IntStream.range(1, 1000).parallel().sequential().forEach(consumer);
             assertEquals(expected.length, consumer.getCount());
         }
     }
 
     public void testLimit() {
-        int[] expected = IntStreams.range(1, 10).toArray();
+        int[] expected = IntStream.range(1, 10).toArray();
 
         {
             int[] actual;
-            actual = IntStreams.iterate(1, new IntUnaryOperator() {
+            actual = IntStream.iterate(1, new IntUnaryOperator() {
                 @Override
                 public int applyAsInt(int i) {
                     return i + 1;
@@ -273,7 +273,7 @@ public class IntPrimitiveOpsTests {
         }
 
         {
-            int[] actual = IntStreams.range(1, 100).parallel().limit(9).toArray();
+            int[] actual = IntStream.range(1, 100).parallel().limit(9).toArray();
             Assert.assertTrue(java.util.Arrays.equals(expected, actual));
         }
     }

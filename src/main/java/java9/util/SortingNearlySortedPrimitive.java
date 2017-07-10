@@ -33,8 +33,7 @@ import java.util.List;
 import java9.util.DualPivotQuicksort;
 import java9.util.StringJoiner;
 import java9.util.function.IntFunction;
-import java9.util.stream.IntStreams;
-import java9.util.stream.RefStreams;
+import java9.util.stream.IntStream;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 
@@ -61,7 +60,7 @@ public class SortingNearlySortedPrimitive {
         // elements
         // This is create various combinations of ascending, descending and
         // equal runs to exercise the nearly sorted code paths
-        return IntStreams.range(0, (int) Math.pow(BASE, 2 * WIDTH)).
+        return IntStream.range(0, (int) Math.pow(BASE, 2 * WIDTH)).
                 mapToObj(this::createArray);
     }
 
@@ -119,7 +118,7 @@ public class SortingNearlySortedPrimitive {
 
     @DataProvider(name = "shapes")
     public Object[][] createShapes() {
-        Stream<List<Object>> baseCases = RefStreams.of(
+        Stream<List<Object>> baseCases = Stream.of(
                 Arrays.asList("hiZeroLowTest", (IntFunction<int[]>) this::hiZeroLowData),
                 Arrays.asList("endLessThanTest", (IntFunction<int[]>) this::endLessThanData),
                 Arrays.asList("highFlatLowTest", (IntFunction<int[]>) this::highFlatLowData),

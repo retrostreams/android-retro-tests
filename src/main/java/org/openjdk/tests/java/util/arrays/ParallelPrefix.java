@@ -35,8 +35,8 @@ import java9.util.function.DoubleBinaryOperator;
 import java9.util.function.Function;
 import java9.util.function.IntBinaryOperator;
 import java9.util.function.LongBinaryOperator;
-import java9.util.stream.IntStreams;
-import java9.util.stream.LongStreams;
+import java9.util.stream.IntStream;
+import java9.util.stream.LongStream;
 import static org.testng.Assert.*;
 import static org.testng695.Assert.*;
 
@@ -68,7 +68,7 @@ public class ParallelPrefix {
 
     @DataProvider(name = "intSet")
     public static Object[][] intSet(){
-        return genericData(size -> IntStreams.range(0, size).toArray(),
+        return genericData(size -> IntStream.range(0, size).toArray(),
                 new IntBinaryOperator[]{
                     java9.lang.Integers::sum,
                     java9.lang.Integers::min});
@@ -76,7 +76,7 @@ public class ParallelPrefix {
 
     @DataProvider(name = "longSet")
     public static Object[][] longSet(){
-        return genericData(size -> LongStreams.range(0, size).toArray(),
+        return genericData(size -> LongStream.range(0, size).toArray(),
                 new LongBinaryOperator[]{
                     java9.lang.Longs::sum,
                     java9.lang.Longs::min});
@@ -84,7 +84,7 @@ public class ParallelPrefix {
 
     @DataProvider(name = "doubleSet")
     public static Object[][] doubleSet(){
-        return genericData(size -> IntStreams.range(0, size).mapToDouble(i -> (double)i).toArray(),
+        return genericData(size -> IntStream.range(0, size).mapToDouble(i -> (double)i).toArray(),
                 new DoubleBinaryOperator[]{
                     java9.lang.Doubles::sum,
                     java9.lang.Doubles::min});
@@ -93,7 +93,7 @@ public class ParallelPrefix {
     @DataProvider(name = "stringSet")
     public static Object[][] stringSet(){
         Function<Integer, String[]> stringsFunc = size ->
-                IntStreams.range(0, size).mapToObj(Integer::toString).toArray(String[]::new);
+                IntStream.range(0, size).mapToObj(Integer::toString).toArray(String[]::new);
         BinaryOperator<String> concat = String::concat;
         return genericData(stringsFunc,
                 (BinaryOperator<String>[]) new BinaryOperator[]{

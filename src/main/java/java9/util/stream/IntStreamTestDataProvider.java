@@ -31,7 +31,6 @@ import java9.util.J8Arrays;
 import java9.util.Spliterators;
 import java9.util.function.Supplier;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.SpinedBuffer;
 
 /** TestNG DataProvider for int-valued streams */
@@ -109,9 +108,9 @@ public class IntStreamTestDataProvider {
                          TestData.Factory.ofSpinedBuffer("SpinedList:" + name, isl)});
 
                 list.add(streamDataDescr("IntStream.intRange(0,l): " + ints.length,
-                                         () -> IntStreams.range(0, ints.length)));
+                                         () -> IntStream.range(0, ints.length)));
                 list.add(streamDataDescr("IntStream.rangeClosed(0,l): " + ints.length,
-                                         () -> IntStreams.rangeClosed(0, ints.length)));
+                                         () -> IntStream.rangeClosed(0, ints.length)));
             }
             testSmallData = listSmall.toArray(new Object[0][]);
             list1000.addAll(listSmall);
@@ -142,12 +141,12 @@ public class IntStreamTestDataProvider {
                 spliterators.add(splitDescr("Primitives.s(SpinedBuffer.iterator()):" + name,
                                             () -> Spliterators.spliteratorUnknownSize(isl.iterator(), 0)));
 
-                spliterators.add(splitDescr("IntStreams.intRange(0, l):" + name,
-                                            () -> IntStreams.range(0, ints.length).spliterator()));
-                spliterators.add(splitDescr("IntStreams.intRangeClosed(0, l):" + name,
-                                            () -> IntStreams.rangeClosed(0, ints.length).spliterator()));
-                spliterators.add(splitDescr("IntStreams.iterate(0, x -> x<l, x -> x+1): " + name,
-                                            () -> IntStreams.iterate(0, x -> x < ints.length, x -> x + 1).spliterator()));
+                spliterators.add(splitDescr("IntStream.intRange(0, l):" + name,
+                                            () -> IntStream.range(0, ints.length).spliterator()));
+                spliterators.add(splitDescr("IntStream.intRangeClosed(0, l):" + name,
+                                            () -> IntStream.rangeClosed(0, ints.length).spliterator()));
+                spliterators.add(splitDescr("IntStream.iterate(0, x -> x<l, x -> x+1): " + name,
+                                            () -> IntStream.iterate(0, x -> x < ints.length, x -> x + 1).spliterator()));
                 // Need more!
             }
             spliteratorTestData = spliterators.toArray(new Object[0][]);

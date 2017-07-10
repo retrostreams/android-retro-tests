@@ -31,12 +31,8 @@ import java.util.List;
 
 import java9.util.function.Function;
 import java9.util.stream.DoubleStream;
-import java9.util.stream.DoubleStreams;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.LambdaTestHelpers;
@@ -61,7 +57,7 @@ public class StreamBuilderTest extends OpTestCase {
     @Test
     public void testOfNullableWithNonNull() {
         TestData.OfRef<Integer> data = TestData.Factory.ofSupplier("{1}",
-                                                                   () -> RefStreams.ofNullable(1));
+                                                                   () -> Stream.ofNullable(1));
 
         withData(data).
                 stream(s -> s).
@@ -72,7 +68,7 @@ public class StreamBuilderTest extends OpTestCase {
     @Test
     public void testOfNullableWithNull() {
         TestData.OfRef<Integer> data = TestData.Factory.ofSupplier("{null})",
-                                                                   () -> RefStreams.ofNullable(null));
+                                                                   () -> Stream.ofNullable(null));
 
         withData(data).
                 stream(s -> s).
@@ -101,7 +97,7 @@ public class StreamBuilderTest extends OpTestCase {
     @Test
     public void testSingleton() {
         TestData.OfRef<Integer> data = TestData.Factory.ofSupplier("{1}",
-                                                                   () -> RefStreams.of(1));
+                                                                   () -> Stream.of(1));
 
         withData(data).
                 stream(s -> s).
@@ -116,8 +112,8 @@ public class StreamBuilderTest extends OpTestCase {
 
     @Test(dataProvider = "sizes")
     public void testAfterBuilding(int size) {
-        Stream.Builder<Integer> sb = RefStreams.builder();
-        IntStreams.range(0, size).boxed().forEach(sb);
+        Stream.Builder<Integer> sb = Stream.builder();
+        IntStream.range(0, size).boxed().forEach(sb);
         sb.build();
 
         checkISE(() -> sb.accept(1));
@@ -128,14 +124,14 @@ public class StreamBuilderTest extends OpTestCase {
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testStreamBuilder(int size) {
         testStreamBuilder(size, (s) -> {
-            Stream.Builder<Integer> sb = RefStreams.builder();
-            IntStreams.range(0, s).boxed().forEach(sb);
+            Stream.Builder<Integer> sb = Stream.builder();
+            IntStream.range(0, s).boxed().forEach(sb);
             return sb.build();
         });
 
         testStreamBuilder(size, (s) -> {
-            Stream.Builder<Integer> sb = RefStreams.builder();
-            IntStreams.range(0, s).boxed().forEach(i -> {
+            Stream.Builder<Integer> sb = Stream.builder();
+            IntStream.range(0, s).boxed().forEach(i -> {
                 Stream.Builder<Integer> _sb = sb.add(i);
                 assertTrue(sb == _sb);
             });
@@ -149,12 +145,12 @@ public class StreamBuilderTest extends OpTestCase {
 
         withData(data).
                 stream(s -> s).
-                expectedResult(IntStreams.range(0, size).boxed().collect(toList())).
+                expectedResult(IntStream.range(0, size).boxed().collect(toList())).
                 exercise();
 
         withData(data).
                 stream(s -> s.map(LambdaTestHelpers.identity())).
-                expectedResult(IntStreams.range(0, size).boxed().collect(toList())).
+                expectedResult(IntStream.range(0, size).boxed().collect(toList())).
                 exercise();
     }
 
@@ -163,7 +159,7 @@ public class StreamBuilderTest extends OpTestCase {
     @Test
     public void testIntSingleton() {
         TestData.OfInt data = TestData.Factory.ofIntSupplier("{1}",
-                                                             () -> IntStreams.of(1));
+                                                             () -> IntStream.of(1));
 
         withData(data).
                 stream(s -> s).
@@ -178,8 +174,8 @@ public class StreamBuilderTest extends OpTestCase {
 
     @Test(dataProvider = "sizes")
     public void testIntAfterBuilding(int size) {
-        IntStream.Builder sb = IntStreams.builder();
-        IntStreams.range(0, size).forEach(sb);
+        IntStream.Builder sb = IntStream.builder();
+        IntStream.range(0, size).forEach(sb);
         sb.build();
 
         checkISE(() -> sb.accept(1));
@@ -190,14 +186,14 @@ public class StreamBuilderTest extends OpTestCase {
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testIntStreamBuilder(int size) {
         testIntStreamBuilder(size, (s) -> {
-            IntStream.Builder sb = IntStreams.builder();
-            IntStreams.range(0, s).forEach(sb);
+            IntStream.Builder sb = IntStream.builder();
+            IntStream.range(0, s).forEach(sb);
             return sb.build();
         });
 
         testIntStreamBuilder(size, (s) -> {
-            IntStream.Builder sb = IntStreams.builder();
-            IntStreams.range(0, s).forEach(i -> {
+            IntStream.Builder sb = IntStream.builder();
+            IntStream.range(0, s).forEach(i -> {
                 IntStream.Builder _sb = sb.add(i);
                 assertTrue(sb == _sb);
             });
@@ -211,12 +207,12 @@ public class StreamBuilderTest extends OpTestCase {
 
         withData(data).
                 stream(s -> s).
-                expectedResult(IntStreams.range(0, size).toArray()).
+                expectedResult(IntStream.range(0, size).toArray()).
                 exercise();
 
         withData(data).
                 stream(s -> s.map(i -> i)).
-                expectedResult(IntStreams.range(0, size).toArray()).
+                expectedResult(IntStream.range(0, size).toArray()).
                 exercise();
     }
 
@@ -225,7 +221,7 @@ public class StreamBuilderTest extends OpTestCase {
     @Test
     public void testLongSingleton() {
         TestData.OfLong data = TestData.Factory.ofLongSupplier("{1}",
-                                                               () -> LongStreams.of(1));
+                                                               () -> LongStream.of(1));
 
         withData(data).
                 stream(s -> s).
@@ -240,8 +236,8 @@ public class StreamBuilderTest extends OpTestCase {
 
     @Test(dataProvider = "sizes")
     public void testLongAfterBuilding(int size) {
-        LongStream.Builder sb = LongStreams.builder();
-        LongStreams.range(0, size).forEach(sb);
+        LongStream.Builder sb = LongStream.builder();
+        LongStream.range(0, size).forEach(sb);
         sb.build();
 
         checkISE(() -> sb.accept(1));
@@ -252,14 +248,14 @@ public class StreamBuilderTest extends OpTestCase {
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testLongStreamBuilder(int size) {
         testLongStreamBuilder(size, (s) -> {
-            LongStream.Builder sb = LongStreams.builder();
-            LongStreams.range(0, s).forEach(sb);
+            LongStream.Builder sb = LongStream.builder();
+            LongStream.range(0, s).forEach(sb);
             return sb.build();
         });
 
         testLongStreamBuilder(size, (s) -> {
-            LongStream.Builder sb = LongStreams.builder();
-            LongStreams.range(0, s).forEach(i -> {
+            LongStream.Builder sb = LongStream.builder();
+            LongStream.range(0, s).forEach(i -> {
                 LongStream.Builder _sb = sb.add(i);
                 assertTrue(sb == _sb);
             });
@@ -273,12 +269,12 @@ public class StreamBuilderTest extends OpTestCase {
 
         withData(data).
                 stream(s -> s).
-                expectedResult(LongStreams.range(0, size).toArray()).
+                expectedResult(LongStream.range(0, size).toArray()).
                 exercise();
 
         withData(data).
                 stream(s -> s.map(i -> i)).
-                expectedResult(LongStreams.range(0, size).toArray()).
+                expectedResult(LongStream.range(0, size).toArray()).
                 exercise();
     }
 
@@ -286,7 +282,7 @@ public class StreamBuilderTest extends OpTestCase {
 
     @Test
     public void testDoubleSingleton() {
-        TestData.OfDouble data = TestData.Factory.ofDoubleSupplier("{1}", () -> DoubleStreams.of(1));
+        TestData.OfDouble data = TestData.Factory.ofDoubleSupplier("{1}", () -> DoubleStream.of(1));
 
         withData(data).
                 stream(s -> s).
@@ -301,8 +297,8 @@ public class StreamBuilderTest extends OpTestCase {
 
     @Test(dataProvider = "sizes")
     public void testDoubleAfterBuilding(int size) {
-        DoubleStream.Builder sb = DoubleStreams.builder();
-        IntStreams.range(0, size).asDoubleStream().forEach(sb);
+        DoubleStream.Builder sb = DoubleStream.builder();
+        IntStream.range(0, size).asDoubleStream().forEach(sb);
         sb.build();
 
         checkISE(() -> sb.accept(1));
@@ -313,14 +309,14 @@ public class StreamBuilderTest extends OpTestCase {
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testDoubleStreamBuilder(int size) {
         testDoubleStreamBuilder(size, (s) -> {
-            DoubleStream.Builder sb = DoubleStreams.builder();
-            IntStreams.range(0, s).asDoubleStream().forEach(sb);
+            DoubleStream.Builder sb = DoubleStream.builder();
+            IntStream.range(0, s).asDoubleStream().forEach(sb);
             return sb.build();
         });
 
         testDoubleStreamBuilder(size, (s) -> {
-            DoubleStream.Builder sb = DoubleStreams.builder();
-            IntStreams.range(0, s).asDoubleStream().forEach(i -> {
+            DoubleStream.Builder sb = DoubleStream.builder();
+            IntStream.range(0, s).asDoubleStream().forEach(i -> {
                 DoubleStream.Builder _sb = sb.add(i);
                 assertTrue(sb == _sb);
             });
@@ -334,12 +330,12 @@ public class StreamBuilderTest extends OpTestCase {
 
         withData(data).
                 stream(s -> s).
-                expectedResult(IntStreams.range(0, size).asDoubleStream().toArray()).
+                expectedResult(IntStream.range(0, size).asDoubleStream().toArray()).
                 exercise();
 
         withData(data).
                 stream(s -> s.map(i -> i)).
-                expectedResult(IntStreams.range(0, size).asDoubleStream().toArray()).
+                expectedResult(IntStream.range(0, size).asDoubleStream().toArray()).
                 exercise();
     }
 }

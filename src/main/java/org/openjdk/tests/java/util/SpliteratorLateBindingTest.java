@@ -49,7 +49,7 @@ import java.util.WeakHashMap;
 import java9.util.Spliterator;
 //import java9.util.function.Function;
 import java9.util.function.Supplier;
-import java9.util.stream.RefStreams;
+import java9.util.stream.Stream;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -122,7 +122,7 @@ public class SpliteratorLateBindingTest extends SpliteratorLateBindingFailFastHe
 
     @DataProvider(name = "Source.Non.Binding.Characteristics")
     public static Object[][] sourceCharacteristicsDataProvider() {
-        return RefStreams.of(sourceDataProvider()).filter(tc -> {
+        return Stream.of(sourceDataProvider()).filter(tc -> {
             @SuppressWarnings("unchecked")
             Supplier<Source<?>> s = (Supplier<Source<?>>) tc[1];
             return !s.get().bindOnCharacteristics();

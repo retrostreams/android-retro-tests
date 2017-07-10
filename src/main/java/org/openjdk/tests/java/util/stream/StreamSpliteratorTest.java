@@ -41,12 +41,8 @@ import java9.util.function.IntConsumer;
 import java9.util.function.LongConsumer;
 import java9.util.function.UnaryOperator;
 import java9.util.stream.DoubleStream;
-import java9.util.stream.DoubleStreams;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.DoubleStreamTestDataProvider;
@@ -300,7 +296,7 @@ public class StreamSpliteratorTest extends OpTestCase {
         if (streamFunctions == null) {
             List<Function<Stream<Integer>, Stream<Integer>>> opFunctions = Arrays.asList(
                     s -> s.filter(pEven),
-                    s -> s.flatMap(x -> RefStreams.of(x, x)),
+                    s -> s.flatMap(x -> Stream.of(x, x)),
                     // @@@ Add distinct once asserting results with or without order
                     //     is correctly supported
 //                    s -> s.distinct(),
@@ -337,7 +333,7 @@ public class StreamSpliteratorTest extends OpTestCase {
                     setContext("proxyEstimateSize", proxyEstimateSize);
                     // Size is assumed to be larger than the target size for no splitting
                     // @@@ Need way to obtain the target size
-                    Spliterator.OfInt sp = intermediateOp.apply(IntStreams.range(0, 1000)).spliterator();
+                    Spliterator.OfInt sp = intermediateOp.apply(IntStream.range(0, 1000)).spliterator();
                     ProxyNoExactSizeSpliterator.OfInt psp = new ProxyNoExactSizeSpliterator.OfInt(sp, proxyEstimateSize);
                     IntStream s = StreamSupport.intStream(psp, true);
                     terminalOp.accept(s);
@@ -396,7 +392,7 @@ public class StreamSpliteratorTest extends OpTestCase {
         if (intStreamFunctions == null) {
             List<Function<IntStream, IntStream>> opFunctions = Arrays.asList(
                     s -> s.filter(ipEven),
-                    s -> s.flatMap(x -> IntStreams.of(x, x)),
+                    s -> s.flatMap(x -> IntStream.of(x, x)),
                     s -> s.sorted());
 
             intStreamFunctions = permuteStreamFunctions(opFunctions);
@@ -430,7 +426,7 @@ public class StreamSpliteratorTest extends OpTestCase {
                     setContext("proxyEstimateSize", proxyEstimateSize);
                     // Size is assumed to be larger than the target size for no splitting
                     // @@@ Need way to obtain the target size
-                    Spliterator.OfLong sp = intermediateOp.apply(LongStreams.range(0, 1000)).spliterator();
+                    Spliterator.OfLong sp = intermediateOp.apply(LongStream.range(0, 1000)).spliterator();
                     ProxyNoExactSizeSpliterator.OfLong psp = new ProxyNoExactSizeSpliterator.OfLong(sp, proxyEstimateSize);
                     LongStream s = StreamSupport.longStream(psp, true);
                     terminalOp.accept(s);
@@ -489,7 +485,7 @@ public class StreamSpliteratorTest extends OpTestCase {
         if (longStreamFunctions == null) {
             List<Function<LongStream, LongStream>> opFunctions = Arrays.asList(
                     s -> s.filter(lpEven),
-                    s -> s.flatMap(x -> LongStreams.of(x, x)),
+                    s -> s.flatMap(x -> LongStream.of(x, x)),
                     s -> s.sorted());
 
             longStreamFunctions = permuteStreamFunctions(opFunctions);
@@ -523,7 +519,7 @@ public class StreamSpliteratorTest extends OpTestCase {
                     setContext("proxyEstimateSize", proxyEstimateSize);
                     // Size is assumed to be larger than the target size for no splitting
                     // @@@ Need way to obtain the target size
-                    Spliterator.OfDouble sp = intermediateOp.apply(IntStreams.range(0, 1000).asDoubleStream()).spliterator();
+                    Spliterator.OfDouble sp = intermediateOp.apply(IntStream.range(0, 1000).asDoubleStream()).spliterator();
                     ProxyNoExactSizeSpliterator.OfDouble psp = new ProxyNoExactSizeSpliterator.OfDouble(sp, proxyEstimateSize);
                     DoubleStream s = StreamSupport.doubleStream(psp, true);
                     terminalOp.accept(s);
@@ -582,7 +578,7 @@ public class StreamSpliteratorTest extends OpTestCase {
         if (doubleStreamFunctions == null) {
             List<Function<DoubleStream, DoubleStream>> opFunctions = Arrays.asList(
                     s -> s.filter(dpEven),
-                    s -> s.flatMap(x -> DoubleStreams.of(x, x)),
+                    s -> s.flatMap(x -> DoubleStream.of(x, x)),
                     s -> s.sorted());
 
             doubleStreamFunctions = permuteStreamFunctions(opFunctions);

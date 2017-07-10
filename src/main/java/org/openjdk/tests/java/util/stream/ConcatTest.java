@@ -36,12 +36,8 @@ import java.util.TreeSet;
 import java9.util.Spliterators;
 import java9.util.Spliterator;
 import java9.util.stream.DoubleStream;
-import java9.util.stream.DoubleStreams;
 import java9.util.stream.IntStream;
-import java9.util.stream.IntStreams;
 import java9.util.stream.LongStream;
-import java9.util.stream.LongStreams;
-import java9.util.stream.RefStreams;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 import java9.util.stream.Characteristics;
@@ -142,13 +138,13 @@ public class ConcatTest {
     }
 
     private void assertRefConcat(Stream<Integer> s1, Stream<Integer> s2, boolean parallel, boolean ordered) {
-        Stream<Integer> result = RefStreams.concat(s1, s2);
+        Stream<Integer> result = Stream.concat(s1, s2);
         assertEquals(result.isParallel(), parallel);
         assertConcatContent(result.spliterator(), ordered, Spliterators.spliterator(expected, 0));
     }
 
     private void assertIntConcat(Stream<Integer> s1, Stream<Integer> s2, boolean parallel, boolean ordered) {
-        IntStream result = IntStreams.concat(s1.mapToInt(Integer::intValue),
+        IntStream result = IntStream.concat(s1.mapToInt(Integer::intValue),
                                             s2.mapToInt(Integer::intValue));
         assertEquals(result.isParallel(), parallel);
         assertConcatContent(result.spliterator(), ordered,
@@ -156,7 +152,7 @@ public class ConcatTest {
     }
 
     private void assertLongConcat(Stream<Integer> s1, Stream<Integer> s2, boolean parallel, boolean ordered) {
-        LongStream result = LongStreams.concat(s1.mapToLong(Integer::longValue),
+        LongStream result = LongStream.concat(s1.mapToLong(Integer::longValue),
                                               s2.mapToLong(Integer::longValue));
         assertEquals(result.isParallel(), parallel);
         assertConcatContent(result.spliterator(), ordered,
@@ -164,7 +160,7 @@ public class ConcatTest {
     }
 
     private void assertDoubleConcat(Stream<Integer> s1, Stream<Integer> s2, boolean parallel, boolean ordered) {
-        DoubleStream result = DoubleStreams.concat(s1.mapToDouble(Integer::doubleValue),
+        DoubleStream result = DoubleStream.concat(s1.mapToDouble(Integer::doubleValue),
                                                   s2.mapToDouble(Integer::doubleValue));
         assertEquals(result.isParallel(), parallel);
         assertConcatContent(result.spliterator(), ordered,

@@ -28,8 +28,8 @@ import java9.util.function.DoubleUnaryOperator;
 import java9.util.function.ToDoubleFunction;
 import java9.util.Spliterator;
 import java9.util.Spliterators;
-import java9.util.stream.DoubleStreams;
-import java9.util.stream.LongStreams;
+import java9.util.stream.DoubleStream;
+import java9.util.stream.LongStream;
 import java9.util.stream.Stream;
 import java9.util.stream.StreamSupport;
 
@@ -70,7 +70,7 @@ public class DoublePrimitiveOpsTests {
 
     public void testToArray() {
         {
-            double[] array = LongStreams.range(1, 10).asDoubleStream().map(new DoubleUnaryOperator() {
+            double[] array = LongStream.range(1, 10).asDoubleStream().map(new DoubleUnaryOperator() {
                 @Override
                 public double applyAsDouble(double i) {
                     return i * 2;
@@ -80,7 +80,7 @@ public class DoublePrimitiveOpsTests {
         }
 
         {
-            double[] array = LongStreams.range(1, 10).parallel().asDoubleStream().map(new DoubleUnaryOperator() {
+            double[] array = LongStream.range(1, 10).parallel().asDoubleStream().map(new DoubleUnaryOperator() {
                 @Override
                 public double applyAsDouble(double i) {
                     return i * 2;
@@ -93,7 +93,7 @@ public class DoublePrimitiveOpsTests {
     public void testSort() {
         final Random r = new Random();
 
-        double[] content = DoubleStreams.generate(new DoubleSupplier() {
+        double[] content = DoubleStream.generate(new DoubleSupplier() {
             @Override
             public double getAsDouble() {
                 return r.nextDouble();
@@ -116,7 +116,7 @@ public class DoublePrimitiveOpsTests {
     public void testSortSort() {
         final Random r = new Random();
 
-        double[] content = DoubleStreams.generate(new DoubleSupplier() {
+        double[] content = DoubleStream.generate(new DoubleSupplier() {
             @Override
             public double getAsDouble() {
                 return r.nextDouble();
@@ -140,7 +140,7 @@ public class DoublePrimitiveOpsTests {
         double[] expected = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         {
-            double[] actual = DoubleStreams.iterate(1.0, new DoubleUnaryOperator() {
+            double[] actual = DoubleStream.iterate(1.0, new DoubleUnaryOperator() {
                 @Override
                 public double applyAsDouble(double i) {
                     return i + 1.0;
@@ -150,7 +150,7 @@ public class DoublePrimitiveOpsTests {
         }
 
         {
-            double[] actual = LongStreams.range(1, 100).parallel().asDoubleStream().limit(9).toArray();
+            double[] actual = LongStream.range(1, 100).parallel().asDoubleStream().limit(9).toArray();
             Assert.assertTrue(java.util.Arrays.equals(expected, actual));
         }
     }

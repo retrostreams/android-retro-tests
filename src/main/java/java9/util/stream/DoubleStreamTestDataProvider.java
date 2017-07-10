@@ -29,7 +29,6 @@ import org.testng.annotations.DataProvider;
 
 import java9.util.Spliterators;
 import java9.util.function.Supplier;
-import java9.util.stream.DoubleStreams;
 import java9.util.stream.SpinedBuffer;
 
 /** TestNG DataProvider for double-valued streams */
@@ -134,9 +133,9 @@ public class DoubleStreamTestDataProvider {
                                             () -> Spliterators.spliterator(isl.iterator(), doubles.length, 0)));
                 spliterators.add(splitDescr("Primitives.s(SpinedBuffer.iterator()):" + name,
                                             () -> Spliterators.spliteratorUnknownSize(isl.iterator(), 0)));
-                spliterators.add(splitDescr("DoubleStreams.iterate(0, x -> x<l, x -> x+1):" + name,
-                                            () -> DoubleStreams.iterate(0.0, x -> x < doubles.length, x -> x + 1.0)
-                                                               .spliterator()));
+                spliterators.add(splitDescr("DoubleStream.iterate(0, x -> x<l, x -> x+1):" + name,
+                                            () -> DoubleStream.iterate(0.0, x -> x < doubles.length, x -> x + 1.0)
+                                                              .spliterator()));
                 // Need more!
             }
             spliteratorTestData = spliterators.toArray(new Object[0][]);
