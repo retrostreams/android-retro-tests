@@ -1,5 +1,7 @@
 # android-retro-tests
 
+![](art/streamsupport-sf.png)
+
 android-retro-tests is the common test suite for the following android-retro projects
 
 * [android-retrostreams](https://github.com/retrostreams/android-retrostreams)
