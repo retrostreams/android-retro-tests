@@ -118,6 +118,10 @@
       <class name="org.openjdk.tests.java.util.SpliteratorTraversingAndSplittingTest"/>
       <class name="org.openjdk.tests.java.util.SpliteratorFailFastTest"/>
       <class name="org.openjdk.tests.java.util.SpliteratorLateBindingTest"/>
+      <class name="org.openjdk.tests.java.util.MOAT"/>
+      <class name="org.openjdk.tests.java.util.ListFactories"/>
+      <class name="org.openjdk.tests.java.util.MapFactories"/>
+      <class name="org.openjdk.tests.java.util.SetFactories"/>
       <class name="org.openjdk.other.tests.java.util.arrays.ParallelSorting"/>
 
       <!-- block 10 (Java9: Stream takeWhile / dropWhile) -->
