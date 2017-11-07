@@ -144,6 +144,11 @@ public class MOAT {
             testListMutatorsAlwaysThrow(list);
         }
 
+        List<Integer> listCopy = Lists.copyOf(Arrays.asList(1, 2, 3));
+        testCollection(listCopy);
+        testImmutableList(listCopy);
+        testListMutatorsAlwaysThrow(listCopy);
+
         // Immutable Set
         testEmptySet(Sets.of());
         testCollMutatorsAlwaysThrow(Sets.of());
@@ -166,6 +171,11 @@ public class MOAT {
             testImmutableSet(set);
             testCollMutatorsAlwaysThrow(set);
         }
+
+        Set<Integer> setCopy = Sets.copyOf(Arrays.asList(1, 2, 3));
+        testCollection(setCopy);
+        testImmutableSet(setCopy);
+        testCollMutatorsAlwaysThrow(setCopy);
 
         // Immutable Map
 
@@ -196,6 +206,11 @@ public class MOAT {
             testImmutableMap(map);
             testMapMutatorsAlwaysThrow(map);
         }
+
+        Map<Integer,Integer> mapCopy = Maps.copyOf(new HashMap<>(Maps.of(1, 101, 2, 202, 3, 303)));
+        testMap(mapCopy);
+        testImmutableMap(mapCopy);
+        testMapMutatorsAlwaysThrow(mapCopy);
 
         Assert.assertEquals(failed, 0, failed + " tests did fail!");
     }
