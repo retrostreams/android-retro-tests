@@ -40,6 +40,9 @@ import org.testng.annotations.Test;
 
 import static java.util.Arrays.asList;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertNotSame;
+import static org.testng.Assert.assertSame;
 
 /*
  * @test
@@ -229,5 +232,50 @@ public class ListFactories {
         } catch (IOException | ClassNotFoundException e) {
             throw new AssertionError(e);
         }
+    }
+
+    List<Integer> genList() {
+        return new ArrayList<>(Arrays.asList(1, 2, 3));
+    }
+
+    @Test
+    public void copyOfResultsEqual() {
+        List<Integer> orig = genList();
+        List<Integer> copy = Lists.copyOf(orig);
+
+        assertEquals(orig, copy);
+        assertEquals(copy, orig);
+    }
+
+    @Test
+    public void copyOfModifiedUnequal() {
+        List<Integer> orig = genList();
+        List<Integer> copy = Lists.copyOf(orig);
+        orig.add(4);
+
+        assertNotEquals(orig, copy);
+        assertNotEquals(copy, orig);
+    }
+
+    @Test
+    public void copyOfIdentity() {
+        List<Integer> orig = genList();
+        List<Integer> copy1 = Lists.copyOf(orig);
+        List<Integer> copy2 = Lists.copyOf(copy1);
+
+        assertNotSame(orig, copy1);
+        assertSame(copy1, copy2);
+    }
+
+    @Test(expectedExceptions=NullPointerException.class)
+    public void copyOfRejectsNullCollection() {
+        @SuppressWarnings("unused")
+        List<Integer> list = Lists.copyOf(null);
+    }
+
+    @Test(expectedExceptions=NullPointerException.class)
+    public void copyOfRejectsNullElements() {
+        @SuppressWarnings("unused")
+        List<Integer> list = Lists.copyOf(Arrays.asList(1, null, 3));
     }
 }
