@@ -171,6 +171,12 @@
       <class name="org.openjdk.tests.tck.LinkedBlockingQueue8Test"/>
       <class name="org.openjdk.tests.tck.LinkedBlockingDeque8Test"/>
 
+      <!-- block 14 (JEP-269, JDK-8177290, JDK-8184690 tests) -->
+      <class name="org.openjdk.tests.java.util.MOAT"/>
+      <class name="org.openjdk.tests.java.util.ListFactories"/>
+      <class name="org.openjdk.tests.java.util.MapFactories"/>
+      <class name="org.openjdk.tests.java.util.SetFactories"/>
+
     </classes>
   </test>
 </suite>
