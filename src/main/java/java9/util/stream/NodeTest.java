@@ -29,9 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import java9.util.function.Function;
-import java9.util.stream.Node;
-import java9.util.stream.Nodes;
-import java9.util.stream.Stream;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -46,7 +43,7 @@ public class NodeTest extends OpTestCase {
     public Object[][] createSizes() {
         List<Object[]> params = new ArrayList<>();
 
-        for (int size : Arrays.asList(0, 1, 4, 15, 16, 17, 127, 128, 129, MAX_SIZE)) {
+        for (int size : Arrays.asList(0, 1, 4, 15, 16, 17, 127, 128, 129, 1000, MAX_SIZE)) {
             Integer[] array = new Integer[size];
             Integer[] degenerateTreeArray = new Integer[size];
             for (int i = 0; i < array.length; i++) {

@@ -30,9 +30,6 @@ import java9.util.J8Arrays;
 import java9.util.PrimitiveIterator;
 import java9.util.Spliterators;
 import java9.util.function.Function;
-import java9.util.stream.DoubleStream;
-import java9.util.stream.Node;
-import java9.util.stream.Nodes;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -47,7 +44,7 @@ public class DoubleNodeTest extends OpTestCase {
     public Object[][] createSizes() {
         List<Object[]> params = new ArrayList<>();
 
-        for (int size : Arrays.asList(0, 1, 4, 15, 16, 17, 127, 128, 129, MAX_SIZE)) {
+        for (int size : Arrays.asList(0, 1, 4, 15, 16, 17, 127, 128, 129, 1000, MAX_SIZE)) {
             double[] array = new double[size];
             double[] degenerateTreeArray = new double[size];
             for (int i = 0; i < array.length; i++) {
