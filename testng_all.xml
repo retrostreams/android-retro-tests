@@ -100,10 +100,6 @@
       <class name="org.openjdk.other.tests.optional.BasicDouble"/>
       <class name="org.openjdk.other.tests.optional.BasicInt"/>
       <class name="org.openjdk.other.tests.optional.BasicLong"/>
-      <class name="org.openjdk.other.tests.phaser.Basic"/>
-      <class name="org.openjdk.other.tests.phaser.FickleRegister"/>
-      <class name="org.openjdk.other.tests.phaser.PhaseOverflow"/>
-      <class name="org.openjdk.other.tests.phaser.TieredArriveLoops"/>
       <class name="org.openjdk.tests.java.util.PrimitiveIteratorDefaults"/>
       <class name="org.openjdk.tests.java.util.SplittableRandomTest"/>
       <class name="org.openjdk.other.tests.stringJoiner.MergeTest"/>
@@ -140,7 +136,11 @@
 
       <!-- Test dependencies block 12: android-retrostreams.jar + android-retroatomic.jar -->
 
-      <!-- block 12 (j9.u.c.atomic package - android-retroatomic) -->
+      <!-- block 12 (j9.u.c.Phaser and j9.u.c.atomic package - android-retroatomic) -->
+      <class name="org.openjdk.other.tests.phaser.Basic"/>
+      <class name="org.openjdk.other.tests.phaser.FickleRegister"/>
+      <class name="org.openjdk.other.tests.phaser.PhaseOverflow"/>
+      <class name="org.openjdk.other.tests.phaser.TieredArriveLoops"/>
       <class name="org.openjdk.other.tests.splittableRandom.SplittableRandomTest"/>
       <class name="org.openjdk.other.tests.threadLocalRandom.ThreadLocalRandomTest"/>
 
