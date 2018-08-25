@@ -14,4 +14,4 @@ It can be run on Java 8 / 9 or on Android using the Android Studio 3.0 desugar t
 
 ## LICENSE
 
-GNU General Public License, version 2, with the Classpath Exception
+GNU General Public License, version 2, [with the Classpath Exception](https://github.com/retrostreams/android-retro-tests/blob/master/GPL_ClasspathException)
