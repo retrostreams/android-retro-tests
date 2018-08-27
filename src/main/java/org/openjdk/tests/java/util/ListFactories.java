@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java9.util.Iterators;
 import java9.util.Lists;
+import java.util.ListIterator;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -45,6 +46,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotSame;
 import static org.testng.Assert.assertSame;
+import static org.testng.Assert.fail;
 
 /*
  * @test
@@ -358,5 +360,18 @@ public class ListFactories {
     public void copyOfRejectsNullElements() {
         @SuppressWarnings("unused")
         List<Integer> list = Lists.copyOf(Arrays.asList(1, null, 3));
+    }
+
+    @Test
+    public void iteratorShouldNotBeListIterator() {
+        List<Integer> list = Lists.of(1, 2, 3, 4, 5);
+        Iterator<Integer> it = list.iterator();
+        it.next();
+        try {
+            ((ListIterator<Integer>) it).previous();
+            fail("ListIterator operation succeeded on Iterator");
+        } catch (ClassCastException ignore) {
+        } catch (UnsupportedOperationException ignore) {
+        }
     }
 }
