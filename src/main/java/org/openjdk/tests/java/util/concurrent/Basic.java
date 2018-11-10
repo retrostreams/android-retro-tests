@@ -35,7 +35,7 @@
  * @test
  * @bug 8005696
  * @summary Basic tests for CompletableFuture
- * @library /lib/testlibrary/
+ * @library /test/lib
  * @run main Basic
  * @run main/othervm -Djava.util.concurrent.ForkJoinPool.common.parallelism=0 Basic
  * @author Chris Hegarty
@@ -58,9 +58,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.testng.annotations.Test;
 
 import java9.util.concurrent.Phaser;
+import jdk.test.lib.Utils;
 import java9.util.concurrent.CompletableFuture;
 import java9.util.concurrent.CompletionException;
-import jdk.testlibrary.Utils;
 
 public class Basic {
     static final long LONG_DELAY_MS = Utils.adjustTimeout(10_000);
