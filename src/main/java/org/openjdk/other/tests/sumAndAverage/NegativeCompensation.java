@@ -31,9 +31,16 @@ package org.openjdk.other.tests.sumAndAverage;
 
 import java9.util.DoubleSummaryStatistics;
 
+import org.testng.annotations.Test;
+
 public class NegativeCompensation {
     static final double VAL = 1.000000001;
     static final int LOG_ITER = 21;
+
+    @Test
+    public static void test() {
+        main(new String[]{});
+    }
 
     public static void main(String[] args) {
         DoubleSummaryStatistics stat0 = new DoubleSummaryStatistics();
