@@ -189,7 +189,7 @@ import junit.framework.TestSuite;
  * </ul>
  */
 public class JSR166TestCase extends TestCase {
-// CVS rev. 1.256
+// CVS rev. 1.262
     private static final boolean useSecurityManager =
         Boolean.getBoolean("jsr166.useSecurityManager");
 
@@ -552,6 +552,12 @@ public class JSR166TestCase extends TestCase {
     public static long MEDIUM_DELAY_MS;
     public static long LONG_DELAY_MS;
 
+    /**
+     * A delay significantly longer than LONG_DELAY_MS.
+     * Use this in a thread that is waited for via awaitTermination(Thread).
+     */
+    public static long LONGER_DELAY_MS;
+
     private static final long RANDOM_TIMEOUT;
     private static final long RANDOM_EXPIRED_TIMEOUT;
     private static final TimeUnit RANDOM_TIMEUNIT;
@@ -580,6 +586,13 @@ public class JSR166TestCase extends TestCase {
     static TimeUnit randomTimeUnit() { return RANDOM_TIMEUNIT; }
 
     /**
+     * Returns a random element from given choices.
+     */
+    <T> T chooseRandomly(T... choices) {
+        return choices[ThreadLocalRandom.current().nextInt(choices.length)];
+    }
+
+    /**
      * Returns a random boolean; a "coin flip".
      */
     static boolean randomBoolean() {
@@ -604,6 +617,7 @@ public class JSR166TestCase extends TestCase {
         SMALL_DELAY_MS  = SHORT_DELAY_MS * 5;
         MEDIUM_DELAY_MS = SHORT_DELAY_MS * 10;
         LONG_DELAY_MS   = SHORT_DELAY_MS * 200;
+        LONGER_DELAY_MS = 2 * LONG_DELAY_MS;
     }
 
     private static final long TIMEOUT_DELAY_MS
@@ -642,8 +656,8 @@ public class JSR166TestCase extends TestCase {
      */
     public void threadRecordFailure(Throwable t) {
         System.err.println(t);
-        dumpTestThreads();
-        threadFailure.compareAndSet(null, t);
+        if (threadFailure.compareAndSet(null, t))
+            dumpTestThreads();
     }
 
     @BeforeMethod
@@ -1327,6 +1341,20 @@ public class JSR166TestCase extends TestCase {
     }
 
     /**
+     * Spin-waits up to LONG_DELAY_MS milliseconds for the current thread to
+     * be interrupted.  Clears the interrupt status before returning.
+     */
+    void awaitInterrupted() {
+        for (long startTime = 0L; !Thread.interrupted(); ) {
+            if (startTime == 0L)
+                startTime = System.nanoTime();
+            else if (millisElapsedSince(startTime) > LONG_DELAY_MS)
+                fail("timed out waiting for thread interrupt");
+            Thread.yield();
+        }
+    }
+
+    /**
      * Returns the number of milliseconds since time given by
      * startNanoTime, which must have been previously returned from a
      * call to {@link System#nanoTime()}.
@@ -1369,15 +1397,21 @@ public class JSR166TestCase extends TestCase {
      * to terminate (using {@link Thread#join(long)}), else interrupts
      * the thread (in the hope that it may terminate later) and fails.
      */
-    void awaitTermination(Thread t, long timeoutMillis) {
+    void awaitTermination(Thread thread, long timeoutMillis) {
         try {
-            t.join(timeoutMillis);
+            thread.join(timeoutMillis);
         } catch (InterruptedException fail) {
             threadUnexpectedException(fail);
-        } finally {
-            if (t.getState() != Thread.State.TERMINATED) {
-                t.interrupt();
-                threadFail("timed out waiting for thread to terminate");
+        }
+        if (thread.getState() != Thread.State.TERMINATED) {
+            String detail = String.format(
+                    "timed out waiting for thread to terminate, thread=%s, state=%s" ,
+                    thread, thread.getState());
+            try {
+                threadFail(detail);
+            } finally {
+                // Interrupt thread __after__ having reported its stack trace
+                thread.interrupt();
             }
         }
     }
