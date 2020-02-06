@@ -10,19 +10,19 @@ import java9.util.DualPivotQuicksort;
 
 public class Ticket66Test {
 
-	public static void main(String[] args) {
-		int[] a = new int[287];
+    public static void main(String[] args) {
+        int[] a = new int[287];
 
-		for (int i = 0; i < a.length; i++) {
-			a[i] = -((i % 143) + 1);
-		}
+        for (int i = 0; i < a.length; i++) {
+            a[i] = -((i % 143) + 1);
+        }
 
-		System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(a));
 
-		DualPivotQuicksort.sort(a, 1, 0, a.length);
+        DualPivotQuicksort.sort(a, 1, 0, a.length);
 
-		System.out.println(Arrays.toString(a));
-	}
+        System.out.println(Arrays.toString(a));
+    }
 
     @Test
     public static void test() {
