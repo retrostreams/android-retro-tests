@@ -19,7 +19,9 @@ public class Ticket66Test {
 
 		System.out.println(Arrays.toString(a));
 
-		DualPivotQuicksort.sort(a, 0, a.length - 1, null, 0, 0);
+		DualPivotQuicksort.sort(a, 1, 0, a.length);
+
+		System.out.println(Arrays.toString(a));
 	}
 
     @Test
