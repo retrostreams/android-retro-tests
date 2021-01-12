@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2018, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, 2020, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,9 +33,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+
 import java9.util.Iterators;
 import java9.util.Lists;
-import java.util.ListIterator;
+import java9.util.stream.Stream;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -360,6 +362,20 @@ public class ListFactories {
     public void copyOfRejectsNullElements() {
         @SuppressWarnings("unused")
         List<Integer> list = Lists.copyOf(Arrays.asList(1, null, 3));
+    }
+
+    @Test(expectedExceptions=NullPointerException.class)
+    public void copyOfRejectsNullElements2() {
+        @SuppressWarnings("unused")
+        List<String> list = Lists.copyOf(Stream.of("a", null, "c").toList());
+    }
+
+    @Test
+    public void copyOfCopiesNullAllowingList() {
+        List<String> orig = Stream.of("a", "b", "c").toList();
+        List<String> copy = Lists.copyOf(orig);
+
+        assertNotSame(orig, copy);
     }
 
     @Test
