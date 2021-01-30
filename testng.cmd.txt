@@ -29,6 +29,8 @@ SET NO_DELEG=-Djava8.util.Spliterators.jre.delegation.enabled=false
 
 SET USE_ITERATOR_SPLITERATOR=-Djava8.util.Spliterators.assume.oracle.collections.impl=false
 
+SET PERMIT=--illegal-access=permit
+
 
 
 %JAVA8% -cp .;./* %ARGS%
@@ -49,9 +51,9 @@ SET USE_ITERATOR_SPLITERATOR=-Djava8.util.Spliterators.assume.oracle.collections
 
 %JAVA15% %PAR_GC% -cp .;./* %ARGS%
 
-%JAVA16% %PAR_GC% -cp .;./* %ARGS%
+%JAVA16% %PAR_GC% %PERMIT% -cp .;./* %ARGS%
 
-%JAVA17% %PAR_GC% -cp .;./* %ARGS%
+%JAVA17% %PAR_GC% %PERMIT% -cp .;./* %ARGS%
 
 
 
