@@ -120,6 +120,7 @@
       <class name="org.openjdk.tests.java.util.SpliteratorTraversingAndSplittingTest"/>
       <class name="org.openjdk.tests.java.util.SpliteratorFailFastTest"/>
       <class name="org.openjdk.tests.java.util.SpliteratorLateBindingTest"/>
+      <class name="org.openjdk.tests.java.util.IteratorFromSpliteratorTest"/>
       <class name="org.openjdk.tests.java.util.MOAT"/>
       <class name="org.openjdk.tests.java.util.ListFactories"/>
       <class name="org.openjdk.tests.java.util.MapFactories"/>
