@@ -1,6 +1,7 @@
 /target/
 /target/
 /upload/
+/test-output/
 /.classpath
 /.project
 /.settings/org.eclipse.core.resources.prefs
