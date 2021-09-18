@@ -122,10 +122,6 @@
       <class name="org.openjdk.tests.java.util.SpliteratorFailFastTest"/>
       <class name="org.openjdk.tests.java.util.SpliteratorLateBindingTest"/>
       <class name="org.openjdk.tests.java.util.IteratorFromSpliteratorTest"/>
-      <class name="org.openjdk.tests.java.util.MOAT"/>
-      <class name="org.openjdk.tests.java.util.ListFactories"/>
-      <class name="org.openjdk.tests.java.util.MapFactories"/>
-      <class name="org.openjdk.tests.java.util.SetFactories"/>
       <class name="org.openjdk.other.tests.java.util.arrays.ParallelSorting"/>
 
       <!-- block 10 (Java9: Stream takeWhile / dropWhile) -->
@@ -182,6 +178,7 @@
       <class name="org.openjdk.tests.tck.LinkedBlockingDeque8Test"/>
 
       <!-- block 14 (JEP-269, JDK-8177290, JDK-8184690 tests) -->
+      <class name="org.openjdk.tests.java.util.EntrySetIterator"/>
       <class name="org.openjdk.tests.java.util.MOAT"/>
       <class name="org.openjdk.tests.java.util.ListFactories"/>
       <class name="org.openjdk.tests.java.util.MapFactories"/>
