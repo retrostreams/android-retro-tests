@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.streamsupport</groupId>
     <artifactId>android-retro-tests</artifactId>
-    <version>1.7.4</version>
+    <version>1.7.5-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
@@ -13,7 +13,7 @@
         <dependency>
             <groupId>net.sourceforge.streamsupport</groupId>
             <artifactId>android-retrostreams</artifactId>
-            <version>1.7.4</version>
+            <version>1.7.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.streamsupport</groupId>
